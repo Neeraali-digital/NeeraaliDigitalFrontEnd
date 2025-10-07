@@ -1,0 +1,35 @@
+@use "tailwindcss";
+
+/* You can add global styles to this file, and also import other style files */
+/* @import '@angular/material/prebuilt-themes/indigo-pink.css'; */
+
+:root {
+  --brand-50: #ffe4e6;
+  --brand-100: #fecdd3;
+  --brand-200: #fda4af;
+  --brand-300: #fb7185;
+  --brand-400: #f43f5e;
+  --brand-500: #e11d48;
+  --brand-600: #be123c;
+  --brand-700: #9f1239;
+  --brand-800: #881337;
+  --brand-900: #701a2c;
+}
+
+@layer base {
+  body {
+    @apply antialiased text-gray-800 pt-20;
+  }
+}
+
+@layer components {
+  .container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+}
+
+@layer utilities {
+  .animate-delay {
+    animation-delay: 200ms;
+  }
+}

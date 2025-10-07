@@ -1,0 +1,44 @@
+<header class="fixed top-2 left-16 right-16  md:top-4 md:left-16 md:right-16 z-50 py-3 md:py-4 rounded-lg" style="background-color: var(--brand-700);">
+  <nav class="flex justify-between items-center px-4 md:px-10">
+    <!-- Mobile Menu Button -->
+    <button class="md:hidden text-white" (click)="toggleMobileMenu()">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+
+    <!-- Left Menu (Desktop) -->
+    <div class="hidden md:flex space-x-6 lg:space-x-8">
+      <a href="/" class="text-xs lg:text-sm font-bold uppercase tracking-wide hover:opacity-80 transition-colors" style="color: var(--brand-400);">HOME</a>
+      <a href="#work" class="text-white text-xs lg:text-sm font-bold uppercase tracking-wide hover:opacity-80 transition-colors">WORK</a>
+      <a routerLink="/services" class="text-white text-xs lg:text-sm font-bold uppercase tracking-wide hover:opacity-80 transition-colors">SERVICES</a>
+    </div>
+
+    <!-- Center Logo -->
+    <div class="text-center flex-1 md:flex-none">
+      <img src="assets/logo4.png" alt="logo" class="h-10 md:h-14 mx-auto">
+    </div>
+
+    <!-- Right Menu (Desktop) -->
+    <div class="hidden md:flex space-x-6 lg:space-x-8">
+      <a href="#about" class="text-white text-xs lg:text-sm font-bold uppercase tracking-wide hover:opacity-80 transition-colors">ABOUT</a>
+      <a href="#careers" class="text-white text-xs lg:text-sm font-bold uppercase tracking-wide hover:opacity-80 transition-colors">CAREERS</a>
+      <a href="#contact" class="text-white text-xs lg:text-sm font-bold uppercase tracking-wide hover:opacity-80 transition-colors">CONTACT</a>
+    </div>
+
+    <!-- Mobile Menu Toggle Placeholder -->
+    <div class="md:hidden w-6"></div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="md:hidden mt-4 px-4 pb-4" [class.hidden]="!mobileMenuOpen">
+    <div class="space-y-3">
+      <a href="/" class="block text-sm font-bold uppercase tracking-wide hover:opacity-80 transition-colors" style="color: var(--brand-400);">HOME</a>
+      <a href="#work" class="block text-white text-sm font-bold uppercase tracking-wide hover:opacity-80 transition-colors">WORK</a>
+      <a routerLink="/services" class="block text-white text-sm font-bold uppercase tracking-wide hover:opacity-80 transition-colors">SERVICES</a>
+      <a href="#about" class="block text-white text-sm font-bold uppercase tracking-wide hover:opacity-80 transition-colors">ABOUT</a>
+      <a href="#careers" class="block text-white text-sm font-bold uppercase tracking-wide hover:opacity-80 transition-colors">CAREERS</a>
+      <a href="#contact" class="block text-white text-sm font-bold uppercase tracking-wide hover:opacity-80 transition-colors">CONTACT</a>
+    </div>
+  </div>
+</header>

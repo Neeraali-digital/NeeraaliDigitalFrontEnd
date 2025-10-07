@@ -1,0 +1,16 @@
+.footer-section {
+  background: linear-gradient(135deg, #1a237e 0%, #311b92 100%);
+}
+.footer-content {
+  animation: fadeIn 0.6s ease-out;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
