@@ -1,5 +1,9 @@
-<app-loading *ngIf="isLoading()"></app-loading>
-<div *ngIf="!isLoading()">
+@if(isLoading()){
+  <app-loading></app-loading>
+}
+
+@if(!isLoading()){
+<div >
   <app-header></app-header>
   <main>
     <router-outlet></router-outlet>
@@ -7,3 +11,4 @@
   <app-footer></app-footer>
   <app-whatsapp-popup></app-whatsapp-popup>
 </div>
+}
