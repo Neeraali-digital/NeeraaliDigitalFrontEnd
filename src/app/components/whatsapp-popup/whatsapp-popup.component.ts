@@ -33,7 +33,7 @@ export class WhatsappPopupComponent implements OnInit, OnDestroy {
       const windowHeight = window.innerHeight;
       
       // Show popup after scrolling 50% of viewport height
-      if (scrollPosition > windowHeight * 0.5 && !this.showPopup) {
+      if (scrollPosition > windowHeight * 1 && !this.showPopup) {
         this.showPopup = true;
       }
     }, 100);

@@ -11,6 +11,26 @@ export class TrustedBy implements AfterViewInit {
     this.animateCounters();
   }
 
+  logos = [
+  '../../../assets/logos/1.png',
+  '../../../assets/logos/2.png',
+  '../../../assets/logos/3.jpg',
+  '../../../assets/logos/4.jpg',
+  '../../../assets/logos/5.png',
+  '../../../assets/logos/6.png',
+  '../../../assets/logos/7.png',
+  '../../../assets/logos/8.png',
+  '../../../assets/logos/9.png',
+  '../../../assets/logos/10.png',
+  '../../../assets/logos/11.jpg',
+  '../../../assets/logos/12.jpg',
+  '../../../assets/logos/13.png',
+  '../../../assets/logos/14.jpg',
+  '../../../assets/logos/15.jpg',
+  '../../../assets/logos/16.png',
+  '../../../assets/logos/17.png'
+]
+
   private animateCounters() {
     const counters = document.querySelectorAll('.counter');
     

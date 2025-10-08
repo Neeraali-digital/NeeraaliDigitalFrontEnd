@@ -1,0 +1,14 @@
+.carousel-container {
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.carousel-slide {
+  transition: opacity 0.5s ease-in-out;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .group:hover .opacity-0 {
+    opacity: 1;
+  }
+}

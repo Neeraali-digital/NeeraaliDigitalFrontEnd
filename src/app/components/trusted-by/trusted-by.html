@@ -24,55 +24,12 @@
       <div class="relative overflow-hidden mb-16">
         <div class="flex animate-scroll space-x-12">
           <!-- First Set -->
-          <div class="flex items-center justify-center h-20 w-40 bg-gray-50 rounded-2xl flex-shrink-0">
-            <div class="text-2xl font-bold text-gray-400">Microsoft</div>
-          </div>
-          <div class="flex items-center justify-center h-20 w-40 bg-gray-50 rounded-2xl flex-shrink-0">
-            <div class="text-2xl font-bold text-gray-400">Google</div>
-          </div>
-          <div class="flex items-center justify-center h-20 w-40 bg-gray-50 rounded-2xl flex-shrink-0">
-            <div class="text-2xl font-bold text-gray-400">Amazon</div>
-          </div>
-          <div class="flex items-center justify-center h-20 w-40 bg-gray-50 rounded-2xl flex-shrink-0">
-            <div class="text-2xl font-bold text-gray-400">Apple</div>
-          </div>
-          <div class="flex items-center justify-center h-20 w-40 bg-gray-50 rounded-2xl flex-shrink-0">
-            <div class="text-2xl font-bold text-gray-400">Netflix</div>
-          </div>
-          <div class="flex items-center justify-center h-20 w-40 bg-gray-50 rounded-2xl flex-shrink-0">
-            <div class="text-2xl font-bold text-gray-400">Spotify</div>
-          </div>
-          <div class="flex items-center justify-center h-20 w-40 bg-gray-50 rounded-2xl flex-shrink-0">
-            <div class="text-2xl font-bold text-gray-400">Adobe</div>
-          </div>
-          <div class="flex items-center justify-center h-20 w-40 bg-gray-50 rounded-2xl flex-shrink-0">
-            <div class="text-2xl font-bold text-gray-400">Tesla</div>
-          </div>
-          <!-- Duplicate Set for Seamless Loop -->
-          <div class="flex items-center justify-center h-20 w-40 bg-gray-50 rounded-2xl flex-shrink-0">
-            <div class="text-2xl font-bold text-gray-400">Microsoft</div>
-          </div>
-          <div class="flex items-center justify-center h-20 w-40 bg-gray-50 rounded-2xl flex-shrink-0">
-            <div class="text-2xl font-bold text-gray-400">Google</div>
-          </div>
-          <div class="flex items-center justify-center h-20 w-40 bg-gray-50 rounded-2xl flex-shrink-0">
-            <div class="text-2xl font-bold text-gray-400">Amazon</div>
-          </div>
-          <div class="flex items-center justify-center h-20 w-40 bg-gray-50 rounded-2xl flex-shrink-0">
-            <div class="text-2xl font-bold text-gray-400">Apple</div>
-          </div>
-          <div class="flex items-center justify-center h-20 w-40 bg-gray-50 rounded-2xl flex-shrink-0">
-            <div class="text-2xl font-bold text-gray-400">Netflix</div>
-          </div>
-          <div class="flex items-center justify-center h-20 w-40 bg-gray-50 rounded-2xl flex-shrink-0">
-            <div class="text-2xl font-bold text-gray-400">Spotify</div>
-          </div>
-          <div class="flex items-center justify-center h-20 w-40 bg-gray-50 rounded-2xl flex-shrink-0">
-            <div class="text-2xl font-bold text-gray-400">Adobe</div>
-          </div>
-          <div class="flex items-center justify-center h-20 w-40 bg-gray-50 rounded-2xl flex-shrink-0">
-            <div class="text-2xl font-bold text-gray-400">Tesla</div>
-          </div>
+           @for (logo of logos; track logo){
+             <div class="flex items-center justify-center h-20 w-40 bg-gray-50 rounded-2xl flex-shrink-0">
+               <img [src]="logo" alt="logo">
+              </div>
+            }
+          
         </div>
       </div>
 
