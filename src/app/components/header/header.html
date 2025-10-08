@@ -9,9 +9,9 @@
 
     <!-- Left Menu (Desktop) -->
     <div class="hidden md:flex space-x-6 lg:space-x-8">
-      <a routerLink="/" class="text-xs lg:text-sm font-bold uppercase tracking-wide hover:opacity-80 transition-colors" style="color: var(--brand-400);">HOME</a>
-      <a routerLink="/work" class="text-white text-xs lg:text-sm font-bold uppercase tracking-wide hover:opacity-80 transition-colors">WORK</a>
-      <a routerLink="/services" class="text-white text-xs lg:text-sm font-bold uppercase tracking-wide hover:opacity-80 transition-colors">SERVICES</a>
+      <a (click)="navigateToTop('/')" [class]="isActive('/') ? 'text-xs lg:text-sm font-bold uppercase tracking-wide hover:opacity-80 transition-colors cursor-pointer' : 'text-white text-xs lg:text-sm font-bold uppercase tracking-wide hover:opacity-80 transition-colors cursor-pointer'" [style.color]="isActive('/') ? 'var(--brand-400)' : ''">HOME</a>
+      <a (click)="navigateToTop('/work')" [class]="isActive('/work') ? 'text-xs lg:text-sm font-bold uppercase tracking-wide hover:opacity-80 transition-colors cursor-pointer' : 'text-white text-xs lg:text-sm font-bold uppercase tracking-wide hover:opacity-80 transition-colors cursor-pointer'" [style.color]="isActive('/work') ? 'var(--brand-400)' : ''">WORK</a>
+      <a (click)="navigateToTop('/services')" [class]="isActive('/services') ? 'text-xs lg:text-sm font-bold uppercase tracking-wide hover:opacity-80 transition-colors cursor-pointer' : 'text-white text-xs lg:text-sm font-bold uppercase tracking-wide hover:opacity-80 transition-colors cursor-pointer'" [style.color]="isActive('/services') ? 'var(--brand-400)' : ''">SERVICES</a>
     </div>
 
     <!-- Center Logo -->
@@ -21,8 +21,8 @@
 
     <!-- Right Menu (Desktop) -->
     <div class="hidden md:flex space-x-6 lg:space-x-8">
-      <a routerLink="/about" class="text-white text-xs lg:text-sm font-bold uppercase tracking-wide hover:opacity-80 transition-colors">ABOUT</a>
-      <a routerLink="/careers" class="text-white text-xs lg:text-sm font-bold uppercase tracking-wide hover:opacity-80 transition-colors">CAREERS</a>
+      <a (click)="navigateToTop('/about')" [class]="isActive('/about') ? 'text-xs lg:text-sm font-bold uppercase tracking-wide hover:opacity-80 transition-colors cursor-pointer' : 'text-white text-xs lg:text-sm font-bold uppercase tracking-wide hover:opacity-80 transition-colors cursor-pointer'" [style.color]="isActive('/about') ? 'var(--brand-400)' : ''">ABOUT</a>
+      <a (click)="navigateToTop('/careers')" [class]="isActive('/careers') ? 'text-xs lg:text-sm font-bold uppercase tracking-wide hover:opacity-80 transition-colors cursor-pointer' : 'text-white text-xs lg:text-sm font-bold uppercase tracking-wide hover:opacity-80 transition-colors cursor-pointer'" [style.color]="isActive('/careers') ? 'var(--brand-400)' : ''">CAREERS</a>
       <a href="#contact" class="text-white text-xs lg:text-sm font-bold uppercase tracking-wide hover:opacity-80 transition-colors">CONTACT</a>
     </div>
 
@@ -33,11 +33,11 @@
   <!-- Mobile Menu -->
   <div class="md:hidden mt-4 px-4 pb-4" [class.hidden]="!mobileMenuOpen">
     <div class="space-y-3">
-      <a routerLink="/" class="block text-sm font-bold uppercase tracking-wide hover:opacity-80 transition-colors" style="color: var(--brand-400);">HOME</a>
-      <a routerLink="/work" class="block text-white text-sm font-bold uppercase tracking-wide hover:opacity-80 transition-colors">WORK</a>
-      <a routerLink="/services" class="block text-white text-sm font-bold uppercase tracking-wide hover:opacity-80 transition-colors">SERVICES</a>
-      <a routerLink="/about" class="block text-white text-sm font-bold uppercase tracking-wide hover:opacity-80 transition-colors">ABOUT</a>
-      <a routerLink="/careers" class="block text-white text-sm font-bold uppercase tracking-wide hover:opacity-80 transition-colors">CAREERS</a>
+      <a (click)="navigateToTop('/')" [class]="isActive('/') ? 'block text-sm font-bold uppercase tracking-wide hover:opacity-80 transition-colors cursor-pointer' : 'block text-white text-sm font-bold uppercase tracking-wide hover:opacity-80 transition-colors cursor-pointer'" [style.color]="isActive('/') ? 'var(--brand-400)' : ''">HOME</a>
+      <a (click)="navigateToTop('/work')" [class]="isActive('/work') ? 'block text-sm font-bold uppercase tracking-wide hover:opacity-80 transition-colors cursor-pointer' : 'block text-white text-sm font-bold uppercase tracking-wide hover:opacity-80 transition-colors cursor-pointer'" [style.color]="isActive('/work') ? 'var(--brand-400)' : ''">WORK</a>
+      <a (click)="navigateToTop('/services')" [class]="isActive('/services') ? 'block text-sm font-bold uppercase tracking-wide hover:opacity-80 transition-colors cursor-pointer' : 'block text-white text-sm font-bold uppercase tracking-wide hover:opacity-80 transition-colors cursor-pointer'" [style.color]="isActive('/services') ? 'var(--brand-400)' : ''">SERVICES</a>
+      <a (click)="navigateToTop('/about')" [class]="isActive('/about') ? 'block text-sm font-bold uppercase tracking-wide hover:opacity-80 transition-colors cursor-pointer' : 'block text-white text-sm font-bold uppercase tracking-wide hover:opacity-80 transition-colors cursor-pointer'" [style.color]="isActive('/about') ? 'var(--brand-400)' : ''">ABOUT</a>
+      <a (click)="navigateToTop('/careers')" [class]="isActive('/careers') ? 'block text-sm font-bold uppercase tracking-wide hover:opacity-80 transition-colors cursor-pointer' : 'block text-white text-sm font-bold uppercase tracking-wide hover:opacity-80 transition-colors cursor-pointer'" [style.color]="isActive('/careers') ? 'var(--brand-400)' : ''">CAREERS</a>
       <a href="#contact" class="block text-white text-sm font-bold uppercase tracking-wide hover:opacity-80 transition-colors">CONTACT</a>
     </div>
   </div>
