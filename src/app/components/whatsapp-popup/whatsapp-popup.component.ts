@@ -10,37 +10,19 @@ import { CommonModule } from '@angular/common';
 })
 export class WhatsappPopupComponent implements OnInit, OnDestroy {
   showPopup = false;
-  private scrollTimeout: any;
   private reopenTimeout: any;
 
   ngOnInit() {
-    window.addEventListener('scroll', this.handleScroll.bind(this));
+    // Show popup immediately when component loads
+    setTimeout(() => {
+      this.showPopup = true;
+    }, 1000);
   }
 
   ngOnDestroy() {
-    window.removeEventListener('scroll', this.handleScroll.bind(this));
-    if (this.scrollTimeout) {
-      clearTimeout(this.scrollTimeout);
-    }
     if (this.reopenTimeout) {
       clearTimeout(this.reopenTimeout);
     }
-  }
-
-  private handleScroll() {
-    if (this.scrollTimeout) {
-      clearTimeout(this.scrollTimeout);
-    }
-
-    this.scrollTimeout = setTimeout(() => {
-      const scrollPosition = window.scrollY;
-      const windowHeight = window.innerHeight;
-      
-      // Show popup after scrolling 50% of viewport height
-      if (scrollPosition > windowHeight * 1 && !this.showPopup) {
-        this.showPopup = true;
-      }
-    }, 3000);
   }
 
   closePopup() {
