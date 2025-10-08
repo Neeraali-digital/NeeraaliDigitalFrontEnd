@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
 export class WhatsappPopupComponent implements OnInit, OnDestroy {
   showPopup = false;
   private scrollTimeout: any;
+  private reopenTimeout: any;
 
   ngOnInit() {
     window.addEventListener('scroll', this.handleScroll.bind(this));
@@ -20,6 +21,9 @@ export class WhatsappPopupComponent implements OnInit, OnDestroy {
     window.removeEventListener('scroll', this.handleScroll.bind(this));
     if (this.scrollTimeout) {
       clearTimeout(this.scrollTimeout);
+    }
+    if (this.reopenTimeout) {
+      clearTimeout(this.reopenTimeout);
     }
   }
 
@@ -36,11 +40,16 @@ export class WhatsappPopupComponent implements OnInit, OnDestroy {
       if (scrollPosition > windowHeight * 1 && !this.showPopup) {
         this.showPopup = true;
       }
-    }, 100);
+    }, 3000);
   }
 
   closePopup() {
     this.showPopup = false;
+    
+    // Reopen popup after 30 seconds
+    this.reopenTimeout = setTimeout(() => {
+      this.showPopup = true;
+    }, 30000);
   }
 
   openWhatsApp() {
@@ -48,6 +57,11 @@ export class WhatsappPopupComponent implements OnInit, OnDestroy {
     const message = 'Hi! I would like to discuss my brand growth with Neeraali Digital.';
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
-    this.closePopup();
+    this.showPopup = false;
+    
+    // Clear any pending reopen timeout when user clicks WhatsApp
+    if (this.reopenTimeout) {
+      clearTimeout(this.reopenTimeout);
+    }
   }
 }

@@ -62,4 +62,12 @@ export class TrustedBy implements AfterViewInit {
       element.textContent = Math.floor(current).toString();
     }, 16);
   }
+
+  getFirstHalfLogos() {
+    return this.logos.slice(0, Math.ceil(this.logos.length / 2));
+  }
+
+  getSecondHalfLogos() {
+    return this.logos.slice(Math.ceil(this.logos.length / 2));
+  }
 }

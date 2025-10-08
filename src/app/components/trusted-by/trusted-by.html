@@ -22,19 +22,38 @@
 
       <!-- Animated Logo Carousel -->
       <div class="relative overflow-hidden mb-16">
-        <div class="flex animate-scroll space-x-12">
-          <!-- First Set -->
-           @for (logo of logos; track logo){
-             <div class="flex items-center justify-center h-20 w-40 bg-gray-50 rounded-2xl flex-shrink-0">
-               <img [src]="logo" alt="logo">
+        <!-- Desktop: Single row carousel -->
+        <div class="hidden md:block">
+          <div class="flex animate-scroll space-x-12">
+            @for (logo of logos; track logo){
+              <div class="flex items-center justify-center h-20 w-40 bg-gray-50 rounded-2xl flex-shrink-0">
+                <img [src]="logo" alt="logo" class="!rounded-2xl">
               </div>
             }
-          
+          </div>
+        </div>
+        
+        <!-- Mobile: Two rows -->
+        <div class="md:hidden space-y-6">
+          <div class="flex animate-scroll space-x-8">
+            @for (logo of getFirstHalfLogos(); track logo){
+              <div class="flex items-center justify-center h-16 w-32 bg-gray-50 rounded-xl flex-shrink-0">
+                <img [src]="logo" alt="logo" class="!rounded-xl max-h-12 max-w-28 object-contain">
+              </div>
+            }
+          </div>
+          <div class="flex animate-scroll-reverse space-x-8">
+            @for (logo of getSecondHalfLogos(); track logo){
+              <div class="flex items-center justify-center h-16 w-32 bg-gray-50 rounded-xl flex-shrink-0">
+                <img [src]="logo" alt="logo" class="!rounded-xl max-h-12 max-w-28 object-contain">
+              </div>
+            }
+          </div>
         </div>
       </div>
 
       <!-- Stats -->
-      <div class="grid md:grid-cols-4 gap-8 text-center">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
         <div class="space-y-2">
           <div class="text-4xl font-black counter" style="color: var(--brand-600);" data-target="150">0</div>
           <div class="text-gray-600 font-medium">Happy Clients</div>
