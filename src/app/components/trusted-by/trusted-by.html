@@ -1,10 +1,18 @@
-<section id="trusted-by" class="relative py-24 bg-white overflow-hidden">
+<section id="trusted-by" class="relative py-16 bg-white overflow-hidden">
   <!-- Background Elements -->
   <div class="absolute inset-0">
     <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r" style="background: linear-gradient(90deg, var(--brand-400), var(--brand-600), var(--brand-400));"></div>
   </div>
 
-  <div class="container mx-auto px-6 lg:px-12 relative z-10">
+  <div class="container mx-auto px-6 lg:px-12 relative z-10 top-36">
+      <!-- Semi-Circle Logo Layout -->
+      <div class="relative w-full h-[700px] flex justify-center items-end">
+        @for (logoItem of getLogosWithPosition(); track logoItem.src){
+          <div class="logo-card absolute" [class]="logoItem.size" [style.transform]="logoItem.transform">
+            <img [src]="logoItem.src" alt="logo" class="w-full h-full object-contain">
+          </div>
+        }
+      </div>
     <div class="max-w-7xl mx-auto">
       <!-- Header -->
       <div class="text-center mb-16">
@@ -20,37 +28,7 @@
         </p>
       </div>
 
-      <!-- Animated Logo Carousel -->
-      <div class="relative overflow-hidden mb-16">
-        <!-- Desktop: Single row carousel -->
-        <div class="hidden md:block">
-          <div class="flex animate-scroll space-x-12">
-            @for (logo of logos; track logo){
-              <div class="flex items-center justify-center h-20 w-40 bg-gray-50 rounded-2xl flex-shrink-0">
-                <img [src]="logo" alt="logo" class="!rounded-2xl">
-              </div>
-            }
-          </div>
-        </div>
-        
-        <!-- Mobile: Two rows -->
-        <div class="md:hidden space-y-6">
-          <div class="flex animate-scroll space-x-8">
-            @for (logo of getFirstHalfLogos(); track logo){
-              <div class="flex items-center justify-center h-16 w-32 bg-gray-50 rounded-xl flex-shrink-0">
-                <img [src]="logo" alt="logo" class="!rounded-xl max-h-12 max-w-28 object-contain">
-              </div>
-            }
-          </div>
-          <div class="flex animate-scroll-reverse space-x-8">
-            @for (logo of getSecondHalfLogos(); track logo){
-              <div class="flex items-center justify-center h-16 w-32 bg-gray-50 rounded-xl flex-shrink-0">
-                <img [src]="logo" alt="logo" class="!rounded-xl max-h-12 max-w-28 object-contain">
-              </div>
-            }
-          </div>
-        </div>
-      </div>
+    
 
       <!-- Stats -->
       <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
