@@ -1,0 +1,86 @@
+<div class="reviews-page">
+  <div class="page-header">
+    <h2>Reviews Management</h2>
+    <button class="add-btn" (click)="openAddModal()">
+      <span class="material-icons">add</span>
+      Add Review
+    </button>
+  </div>
+
+  <div class="reviews-table-container">
+    <table class="reviews-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Rating</th>
+          <th>Comment</th>
+          <th>Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let review of reviews">
+          <td>{{ review.name }}</td>
+          <td>
+            <div class="rating">
+              <span class="stars">{{ getStars(review.rating) }}</span>
+              <span class="rating-number">({{ review.rating }}/5)</span>
+            </div>
+          </td>
+          <td>{{ review.comment }}</td>
+          <td>{{ review.date }}</td>
+          <td>
+            <div class="actions">
+              <button class="action-btn" (click)="openEditModal(review)">
+                <span class="material-icons">edit</span>
+              </button>
+              <button class="action-btn delete" (click)="deleteReview(review.id)">
+                <span class="material-icons">delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Modal for Add/Edit -->
+  <div class="modal" *ngIf="showModal" (click)="closeModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3>{{ editingReview ? 'Edit Review' : 'Add Review' }}</h3>
+        <button class="close-btn" (click)="closeModal()">
+          <span class="material-icons">close</span>
+        </button>
+      </div>
+      <form class="modal-form" (ngSubmit)="saveReview()">
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" [(ngModel)]="editingReview.name" name="name" required>
+        </div>
+        <div class="form-group">
+          <label>Rating</label>
+          <select [(ngModel)]="editingReview.rating" name="rating" required>
+            <option value="1">1 Star</option>
+            <option value="2">2 Stars</option>
+            <option value="3">3 Stars</option>
+            <option value="4">4 Stars</option>
+            <option value="5">5 Stars</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Comment</label>
+          <textarea [(ngModel)]="editingReview.comment" name="comment" required></textarea>
+        </div>
+        <div class="form-group">
+          <label>Date</label>
+          <input type="date" [(ngModel)]="editingReview.date" name="date" required>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="cancel-btn" (click)="closeModal()">Cancel</button>
+          <button type="submit" class="save-btn">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

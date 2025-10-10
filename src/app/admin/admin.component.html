@@ -1,0 +1,65 @@
+<div class="admin-layout !overflow-hidden overflow-y-hidden">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo-container">
+        <div class="logo-icon">
+          <span class="material-icons">business</span>
+        </div>
+        <div class="logo-text">
+         <img src="../../assets/logo4.png" alt="" class="h-10">
+        </div>
+      </div>
+    </div>
+    
+    <nav class="sidebar-nav">
+      <a routerLink="/admin/dashboard" routerLinkActive="active" class="nav-item">
+        <span class="material-icons">dashboard</span>
+        Dashboard
+      </a>
+      <a routerLink="/admin/users" routerLinkActive="active" class="nav-item">
+        <span class="material-icons">people</span>
+        Users
+      </a>
+      <a routerLink="/admin/blogs" routerLinkActive="active" class="nav-item">
+        <span class="material-icons">article</span>
+        Blogs
+      </a>
+      <a routerLink="/admin/enquiries" routerLinkActive="active" class="nav-item">
+        <span class="material-icons">contact_mail</span>
+        Enquiries
+      </a>
+      <a routerLink="/admin/reviews" routerLinkActive="active" class="nav-item">
+        <span class="material-icons">rate_review</span>
+        Reviews
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-left">
+        <button class="menu-toggle">
+          <span class="material-icons">menu</span>
+        </button>
+        <h1 class="page-title">Admin Panel</h1>
+      </div>
+      
+      <div class="header-right">
+        <button class="header-btn">
+          <span class="material-icons">notifications</span>
+        </button>
+        <button class="header-btn">
+          <span class="material-icons">account_circle</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Content Area -->
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+</div>

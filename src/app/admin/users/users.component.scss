@@ -1,0 +1,138 @@
+.users-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h2 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+  }
+
+  .add-btn {
+    background: var(--brand-500);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+
+    &:hover {
+      background: var(--brand-600);
+    }
+  }
+}
+
+.users-table-container {
+  background: var(--brand-50);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(225, 29, 72, 0.1);
+  overflow: hidden;
+}
+
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th, td {
+    padding: 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--brand-100);
+  }
+
+  th {
+    background: var(--brand-100);
+    font-weight: 600;
+    color: var(--brand-900);
+  }
+
+  tbody tr:hover {
+    background: var(--brand-100);
+  }
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #007bff;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+  .role-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+
+    &.admin {
+      background: var(--brand-700);
+      color: white;
+    }
+
+    &.user {
+      background: var(--brand-600);
+      color: white;
+    }
+  }
+
+  .status-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+
+    &.active {
+      background: var(--brand-100);
+      color: var(--brand-700);
+    }
+
+    &.inactive {
+      background: var(--brand-200);
+      color: var(--brand-900);
+    }
+  }
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.action-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 4px;
+  color: #666;
+
+  &:hover {
+    background: #f0f0f0;
+    color: #333;
+  }
+
+  .material-icons {
+    font-size: 18px;
+  }
+}

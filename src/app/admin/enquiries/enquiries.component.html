@@ -1,0 +1,102 @@
+<div class="enquiries-page">
+  <div class="page-header">
+    <h2>Enquiries Management</h2>
+    <button class="add-btn" (click)="openAddModal()">
+      <span class="material-icons">add</span>
+      Add Enquiry
+    </button>
+  </div>
+
+  <div class="enquiries-table-container">
+    <table class="enquiries-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Project Type</th>
+          <th>Message</th>
+          <th>Date</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let enquiry of enquiries">
+          <td>{{ enquiry.firstName }} {{ enquiry.lastName }}</td>
+          <td>{{ enquiry.email }}</td>
+          <td>{{ enquiry.projectType }}</td>
+          <td>{{ enquiry.message }}</td>
+          <td>{{ enquiry.date }}</td>
+          <td><span class="status-badge" [ngClass]="enquiry.status.toLowerCase()">{{ enquiry.status }}</span></td>
+          <td>
+            <div class="actions">
+              <button class="action-btn" (click)="openEditModal(enquiry)">
+                <span class="material-icons">edit</span>
+              </button>
+              <button class="action-btn delete" (click)="deleteEnquiry(enquiry.id)">
+                <span class="material-icons">delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Modal for Add/Edit -->
+  <div class="modal" *ngIf="showModal" (click)="closeModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3>{{ editingEnquiry ? 'Edit Enquiry' : 'Add Enquiry' }}</h3>
+        <button class="close-btn" (click)="closeModal()">
+          <span class="material-icons">close</span>
+        </button>
+      </div>
+      <form class="modal-form" (ngSubmit)="saveEnquiry()">
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name</label>
+            <input type="text" [(ngModel)]="editingEnquiry.firstName" name="firstName" required>
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" [(ngModel)]="editingEnquiry.lastName" name="lastName" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" [(ngModel)]="editingEnquiry.email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label>Project Type</label>
+          <select [(ngModel)]="editingEnquiry.projectType" name="projectType" required>
+            <option value="">Select a service</option>
+            <option value="Brand Strategy">Brand Strategy</option>
+            <option value="Digital Products">Digital Products</option>
+            <option value="Growth & Scale">Growth & Scale</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea [(ngModel)]="editingEnquiry.message" name="message" required></textarea>
+        </div>
+        <div class="form-group">
+          <label>Date</label>
+          <input type="date" [(ngModel)]="editingEnquiry.date" name="date" required>
+        </div>
+        <div class="form-group">
+          <label>Status</label>
+          <select [(ngModel)]="editingEnquiry.status" name="status">
+            <option value="New">New</option>
+            <option value="Replied">Replied</option>
+            <option value="Closed">Closed</option>
+          </select>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="cancel-btn" (click)="closeModal()">Cancel</button>
+          <button type="submit" class="save-btn">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

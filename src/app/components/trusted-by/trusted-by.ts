@@ -1,23 +1,26 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+interface CardPosition {
+  top?: string;
+  left?: string;
+  right?: string;
+  bottom?: string;
+  width: string;
+  height: string;
+  rotate: string;
+  zIndex: number;
+  animated?: boolean;
+}
 
 @Component({
   selector: 'app-trusted-by',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './trusted-by.html',
   styleUrl: './trusted-by.scss'
 })
-export class TrustedBy implements AfterViewInit {
-  radius = 650; // increased radius for full width arc
-  centerX = 0;
-  centerY = 0;
-  currentIndex = 0;
-  visibleCount = 8;
-
-  ngAfterViewInit() {
-    this.animateCounters();
-    this.startLogoRotation();
-  }
-
+export class TrustedBy implements OnInit, OnDestroy {
   logos = [
     '../../../assets/logos/1.png',
     '../../../assets/logos/2.png',
@@ -30,71 +33,100 @@ export class TrustedBy implements AfterViewInit {
     '../../../assets/logos/9.png',
     '../../../assets/logos/10.png',
     '../../../assets/logos/11.jpg',
-    '../../../assets/logos/12.jpg',
-    '../../../assets/logos/13.png',
-    '../../../assets/logos/14.jpg',
-    '../../../assets/logos/15.jpg',
-    '../../../assets/logos/16.png',
-    '../../../assets/logos/17.png'
+    '../../../assets/logos/12.jpg'
   ];
 
-  // Returns array of objects with logo and transform style for semi-circle layout
-  getLogosWithPosition() {
-    const logosWithPos: { src: string; transform: string; size: string }[] = [];
-    const angleRange = 120; // decreased curve
-    const angleStep = angleRange / (this.visibleCount - 1); // degrees between visible logos
-    const startAngle = (180 - angleRange) / 2; // center the arc
+  // Arc pattern - only top and sides, NO bottom cards
+  allCardPositions: CardPosition[] = [
+    // TOP LEFT ARC (2 cards - initially visible)
+    { top: '8%', left: '8%', width: '200px', height: '160px', rotate: '-15deg', zIndex: 2, animated: false },
+    { top: '5%', left: '18%', width: '190px', height: '150px', rotate: '-8deg', zIndex: 3, animated: false },
+    
+    // TOP (3 cards - initially visible)
+    { top: '2%', left: '32%', width: '210px', height: '170px', rotate: '-3deg', zIndex: 1, animated: false },
+    { top: '1%', left: '45%', width: '205px', height: '165px', rotate: '0deg', zIndex: 2, animated: false },
+    { top: '2%', right: '32%', width: '200px', height: '160px', rotate: '3deg', zIndex: 1, animated: false },
+    
+    // TOP RIGHT ARC (2 cards - initially visible)
+    { top: '5%', right: '18%', width: '195px', height: '155px', rotate: '8deg', zIndex: 3, animated: false },
+    { top: '8%', right: '8%', width: '210px', height: '170px', rotate: '15deg', zIndex: 2, animated: false },
+    
+    // MIDDLE RIGHT (2 cards - delayed animation)
+    { top: '30%', right: '4%', width: '200px', height: '160px', rotate: '18deg', zIndex: 2, animated: true },
+    { top: '50%', right: '6%', width: '205px', height: '165px', rotate: '20deg', zIndex: 1, animated: true },
+    
+    // MIDDLE LEFT (2 cards - delayed animation)  
+    { top: '30%', left: '4%', width: '195px', height: '155px', rotate: '-18deg', zIndex: 2, animated: true },
+    { top: '50%', left: '6%', width: '210px', height: '170px', rotate: '-20deg', zIndex: 1, animated: true },
+    
+    // BOTTOM CORNERS (1 card - delayed animation, optional)
+    { bottom: '8%', left: '12%', width: '190px', height: '150px', rotate: '-12deg', zIndex: 1, animated: true },
+  ];
 
-    for (let i = 0; i < this.visibleCount; i++) {
-      const logoIndex = (this.currentIndex + i) % this.logos.length;
-      const angleDeg = startAngle + i * angleStep; // centered upside down semi-circle
-      const angleRad = angleDeg * (Math.PI / 180);
-      const x = this.radius * Math.cos(angleRad);
-      const y = this.radius * Math.sin(angleRad);
-      const transform = `translate(${x}px, ${-y}px)`; // y inverted for CSS coords
-      let size = 'large';
-      if (i === 0 || i === this.visibleCount - 1) size = 'small';
-      else if (i === 1 || i === this.visibleCount - 2) size = 'medium';
-      logosWithPos.push({ src: this.logos[logoIndex], transform, size });
+  visibleCardPositions: CardPosition[] = [];
+  private animationTimeout?: any;
+
+  ngOnInit(): void {
+    // Show first 7 cards immediately (arc pattern at top)
+    this.visibleCardPositions = this.allCardPositions.slice(0, 7);
+    
+    // Show remaining cards after 3 seconds with staggered animation
+    this.animationTimeout = setTimeout(() => {
+      this.showRemainingCards();
+    }, 3000);
+  }
+
+  ngOnDestroy(): void {
+    if (this.animationTimeout) {
+      clearTimeout(this.animationTimeout);
     }
-    return logosWithPos;
   }
 
-  private startLogoRotation() {
-    setInterval(() => {
-      this.currentIndex = (this.currentIndex + this.visibleCount) % this.logos.length;
-    }, 3000); // switch every 3 seconds
-  }
-
-  private animateCounters() {
-    const counters = document.querySelectorAll('.counter');
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const counter = entry.target as HTMLElement;
-          const target = parseInt(counter.getAttribute('data-target') || '0');
-          this.animateCounter(counter, target);
-          observer.unobserve(counter);
-        }
-      });
+  private showRemainingCards(): void {
+    const remainingCards = this.allCardPositions.slice(7);
+    let delay = 0;
+    
+    remainingCards.forEach((card) => {
+      setTimeout(() => {
+        this.visibleCardPositions.push(card);
+      }, delay);
+      delay += 250; // 250ms stagger between each card
     });
-
-    counters.forEach(counter => observer.observe(counter));
   }
 
-  private animateCounter(element: HTMLElement, target: number) {
-    const duration = 2000;
-    const increment = target / (duration / 16);
-    let current = 0;
+  getCardStyle(position: CardPosition): { [key: string]: string } {
+    const styles: { [key: string]: string } = {
+      width: position.width,
+      height: position.height,
+      transform: `rotate(${position.rotate})`,
+      'z-index': position.zIndex.toString()
+    };
 
-    const timer = setInterval(() => {
-      current += increment;
-      if (current >= target) {
-        current = target;
-        clearInterval(timer);
-      }
-      element.textContent = Math.floor(current).toString();
-    }, 16);
+    if (position.top) styles['top'] = position.top;
+    if (position.left) styles['left'] = position.left;
+    if (position.right) styles['right'] = position.right;
+    if (position.bottom) styles['bottom'] = position.bottom;
+
+    return styles;
+  }
+
+  onExpandClick(): void {
+    console.log('Expand clicked');
+  }
+
+  onRefreshClick(): void {
+    console.log('Refresh clicked');
+    // Reset and restart animation
+    this.visibleCardPositions = this.allCardPositions.slice(0, 7);
+    if (this.animationTimeout) {
+      clearTimeout(this.animationTimeout);
+    }
+    this.animationTimeout = setTimeout(() => {
+      this.showRemainingCards();
+    }, 3000);
+  }
+
+  onReadStoriesClick(): void {
+    console.log('Read stories clicked');
   }
 }

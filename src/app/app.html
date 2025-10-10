@@ -4,11 +4,15 @@
 
 @if(!isLoading()){
 <div >
-  <app-header></app-header>
+  @if(!isAdmin()){
+    <app-header></app-header>
+  }
   <main>
     <router-outlet></router-outlet>
   </main>
-  <app-footer></app-footer>
-  <app-whatsapp-popup></app-whatsapp-popup>
+  @if(!isAdmin()){
+    <app-footer></app-footer>
+    <app-whatsapp-popup></app-whatsapp-popup>
+  }
 </div>
 }

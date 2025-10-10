@@ -1,0 +1,113 @@
+<div class="dashboard">
+  <!-- Stats Cards -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon">
+        <span class="material-icons">people</span>
+      </div>
+      <div class="stat-content">
+        <h3>Total Users</h3>
+        <p class="stat-number">1,234</p>
+        <span class="stat-change positive">+12%</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon">
+        <span class="material-icons">work</span>
+      </div>
+      <div class="stat-content">
+        <h3>Active Projects</h3>
+        <p class="stat-number">89</p>
+        <span class="stat-change positive">+5%</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon">
+        <span class="material-icons">trending_up</span>
+      </div>
+      <div class="stat-content">
+        <h3>Revenue</h3>
+        <p class="stat-number">$45,678</p>
+        <span class="stat-change positive">+18%</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon">
+        <span class="material-icons">task_alt</span>
+      </div>
+      <div class="stat-content">
+        <h3>Completed</h3>
+        <p class="stat-number">156</p>
+        <span class="stat-change negative">-3%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Charts Section -->
+  <div class="charts-section">
+    <div class="chart-container">
+      <div class="chart-header">
+        <h3>Revenue Overview</h3>
+        <select class="chart-filter">
+          <option>Last 7 days</option>
+          <option>Last 30 days</option>
+          <option>Last 3 months</option>
+        </select>
+      </div>
+      <canvas #revenueChart></canvas>
+    </div>
+
+    <div class="chart-container">
+      <div class="chart-header">
+        <h3>Project Status</h3>
+      </div>
+      <canvas #projectChart></canvas>
+    </div>
+  </div>
+
+  <!-- Recent Activity -->
+  <div class="activity-section">
+    <div class="activity-header">
+      <h3>Recent Activity</h3>
+      <button class="view-all-btn">
+        <span>View All</span>
+        <span class="material-icons">arrow_forward</span>
+      </button>
+    </div>
+    
+    <div class="activity-list">
+      <div class="activity-item">
+        <div class="activity-icon">
+          <span class="material-icons">person_add</span>
+        </div>
+        <div class="activity-content">
+          <p><strong>New user registered</strong></p>
+          <span class="activity-time">2 minutes ago</span>
+        </div>
+      </div>
+
+      <div class="activity-item">
+        <div class="activity-icon">
+          <span class="material-icons">assignment_turned_in</span>
+        </div>
+        <div class="activity-content">
+          <p><strong>Project completed</strong></p>
+          <span class="activity-time">1 hour ago</span>
+        </div>
+      </div>
+
+      <div class="activity-item">
+        <div class="activity-icon">
+          <span class="material-icons">payment</span>
+        </div>
+        <div class="activity-content">
+          <p><strong>Payment received</strong></p>
+          <span class="activity-time">3 hours ago</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

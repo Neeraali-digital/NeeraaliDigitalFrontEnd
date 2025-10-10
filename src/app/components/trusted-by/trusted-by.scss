@@ -1,34 +1,158 @@
-.logo-card {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 1s ease, box-shadow 0.3s ease;
+// Photo card base styles
+.photo-card {
+  opacity: 0;
+  animation: cardFadeIn 0.6s ease-out forwards;
 }
 
-.logo-card.small {
-  width: 80px;
-  height: 80px;
+// Fade in animation for cards
+@keyframes cardFadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) rotate(0deg) translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) var(--card-rotation) translateY(0);
+  }
 }
 
-.logo-card.medium {
-  width: 100px;
-  height: 100px;
+// Initial cards appear immediately
+.photo-card:not(.card-animated) {
+  animation-delay: 0s;
 }
 
-.logo-card.large {
-  width: 150px;
-  height: 150px;
+// Delayed cards have entrance animation
+.card-animated {
+  animation: cardSlideIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
-.logo-card:hover {
-  transform: scale(1.1);
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+@keyframes cardSlideIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.5) rotate(0deg) translateY(50px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) var(--card-rotation) translateY(0);
+  }
 }
 
-.logo-card img {
-  max-width: 80%;
-  max-height: 80%;
+// Photo cards hidden on smaller screens
+@media (max-width: 1279px) {
+  div[class*="hidden xl:block"] {
+    display: none !important;
+  }
+}
+
+// Enhanced shadows
+.shadow-2xl {
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+}
+
+.shadow-xl {
+  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.2) !important;
+}
+
+// Smooth transitions
+.transition-all {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.transition-transform {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+// Hover effects
+.hover\:scale-110:hover {
+  transform: scale(1.1) !important;
+}
+
+.hover\:scale-105:hover {
+  transform: scale(1.05) !important;
+}
+
+.hover\:z-50:hover {
+  z-index: 50 !important;
+}
+
+// Group hover for button arrow
+button:hover .group-hover\:translate-x-1 {
+  transform: translateX(0.25rem);
+}
+
+// Rotate effect for refresh button
+.hover\:rotate-180:hover {
+  transform: scale(1.1) rotate(180deg) !important;
+}
+
+// Background gradient
+section {
+  background: linear-gradient(to bottom, #f9fafb, #ffffff);
+}
+
+// Positioning
+.absolute {
+  position: absolute;
+}
+
+.relative {
+  position: relative;
+}
+
+.fixed {
+  position: fixed;
+}
+
+// Z-index layers
+.z-10 {
+  z-index: 10;
+}
+
+.z-20 {
+  z-index: 20;
+}
+
+// Image styling
+img {
+  object-fit: contain;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+// Card container styling
+.bg-white {
+  background-color: #ffffff;
+}
+
+// Responsive grid adjustments
+@media (max-width: 640px) {
+  .grid-cols-1 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 640px) {
+  .sm\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+// Button enhancements
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+// Rounded corners
+.rounded-\[2rem\] {
+  border-radius: 2rem;
+}
+
+.rounded-\[2\.5rem\] {
+  border-radius: 2.5rem;
+}
+
+.rounded-xl {
+  border-radius: 0.75rem;
 }

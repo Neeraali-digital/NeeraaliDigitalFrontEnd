@@ -1,0 +1,137 @@
+<div class="blogs-page">
+  <div class="page-header">
+    <div class="header-content">
+      <h2>Blog Management</h2>
+      <p>Create, edit, and manage your blog posts</p>
+    </div>
+    <button class="add-btn" (click)="openCreateModal()">
+      <span class="material-icons">add</span>
+      Create Blog
+    </button>
+  </div>
+
+  <!-- Filters -->
+  <div class="filters-section">
+    <div class="search-box">
+      <span class="material-icons">search</span>
+      <input type="text" placeholder="Search blogs..." [(ngModel)]="searchTerm">
+    </div>
+    <select class="filter-select" [(ngModel)]="statusFilter">
+      <option value="">All Status</option>
+      <option value="published">Published</option>
+      <option value="draft">Draft</option>
+      <option value="archived">Archived</option>
+    </select>
+  </div>
+
+  <!-- Blogs Table -->
+  <div class="table-container">
+    <table class="blogs-table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Status</th>
+          <th>Created</th>
+          <th>Views</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (blog of filteredBlogs; track blog.id) {
+          <tr>
+            <td>
+              <div class="blog-title">
+                <img [src]="blog.image" alt="Blog" class="blog-thumb">
+                <div>
+                  <h4>{{ blog.title }}</h4>
+                  <p>{{ blog.excerpt }}</p>
+                </div>
+              </div>
+            </td>
+            <td>{{ blog.author }}</td>
+            <td>
+              <span class="status-badge" [class]="blog.status">
+                {{ blog.status | titlecase }}
+              </span>
+            </td>
+            <td>{{ blog.createdAt | date:'MMM dd, yyyy' }}</td>
+            <td>{{ blog.views | number }}</td>
+            <td>
+              <div class="actions">
+                <button class="action-btn edit" (click)="editBlog(blog)">
+                  <span class="material-icons">edit</span>
+                </button>
+                <button class="action-btn view" (click)="viewBlog(blog)">
+                  <span class="material-icons">visibility</span>
+                </button>
+                <button class="action-btn delete" (click)="deleteBlog(blog.id)">
+                  <span class="material-icons">delete</span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Create/Edit Modal -->
+  @if (showModal) {
+    <div class="modal-overlay" (click)="closeModal()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+          <h3>{{ isEditing ? 'Edit Blog' : 'Create New Blog' }}</h3>
+          <button class="close-btn" (click)="closeModal()">
+            <span class="material-icons">close</span>
+          </button>
+        </div>
+        
+        <form class="blog-form" (ngSubmit)="saveBlog()">
+          <div class="form-group">
+            <label>Title</label>
+            <input type="text" [(ngModel)]="currentBlog.title" name="title" required>
+          </div>
+          
+          <div class="form-group">
+            <label>Excerpt</label>
+            <textarea [(ngModel)]="currentBlog.excerpt" name="excerpt" rows="3"></textarea>
+          </div>
+          
+          <div class="form-group">
+            <label>Content</label>
+            <textarea [(ngModel)]="currentBlog.content" name="content" rows="8"></textarea>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label>Author</label>
+              <input type="text" [(ngModel)]="currentBlog.author" name="author">
+            </div>
+            
+            <div class="form-group">
+              <label>Status</label>
+              <select [(ngModel)]="currentBlog.status" name="status">
+                <option value="draft">Draft</option>
+                <option value="published">Published</option>
+                <option value="archived">Archived</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label>Featured Image URL</label>
+            <input type="url" [(ngModel)]="currentBlog.image" name="image">
+          </div>
+          
+          <div class="modal-actions">
+            <button type="button" class="cancel-btn" (click)="closeModal()">Cancel</button>
+            <button type="submit" class="save-btn">
+              {{ isEditing ? 'Update' : 'Create' }} Blog
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  }
+</div>
