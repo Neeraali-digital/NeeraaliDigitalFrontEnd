@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ApiService } from '../../services/api.service';
 
 interface Blog {
   id: number;
@@ -8,9 +9,9 @@ interface Blog {
   excerpt: string;
   content: string;
   author: string;
-  status: 'draft' | 'published' | 'archived';
+  status: string;
   image: string;
-  createdAt: Date;
+  created_at: string;
   views: number;
 }
 
@@ -21,37 +22,34 @@ interface Blog {
   templateUrl: './blogs.component.html',
   styleUrls: ['./blogs.component.scss']
 })
-export class BlogsComponent {
-  blogs: Blog[] = [
-    {
-      id: 1,
-      title: 'Getting Started with Angular 18',
-      excerpt: 'Learn the basics of Angular 18 and its new features',
-      content: 'Full content here...',
-      author: 'John Doe',
-      status: 'published',
-      image: 'https://via.placeholder.com/300x200',
-      createdAt: new Date('2024-01-15'),
-      views: 1250
-    },
-    {
-      id: 2,
-      title: 'Modern Web Development Trends',
-      excerpt: 'Explore the latest trends in web development',
-      content: 'Full content here...',
-      author: 'Jane Smith',
-      status: 'draft',
-      image: 'https://via.placeholder.com/300x200',
-      createdAt: new Date('2024-01-10'),
-      views: 890
-    }
-  ];
-
+export class BlogsComponent implements OnInit {
+  blogs: Blog[] = [];
+  loading = false;
   searchTerm = '';
   statusFilter = '';
   showModal = false;
   isEditing = false;
   currentBlog: Partial<Blog> = {};
+
+  constructor(private apiService: ApiService) {}
+
+  ngOnInit() {
+    this.loadBlogs();
+  }
+
+  loadBlogs() {
+    this.loading = true;
+    this.apiService.get('blogs').subscribe({
+      next: (data: any) => {
+        this.blogs = data as Blog[];
+        this.loading = false;
+      },
+      error: (error) => {
+        console.error('Error loading blogs:', error);
+        this.loading = false;
+      }
+    });
+  }
 
   get filteredBlogs() {
     return this.blogs.filter(blog => {
@@ -88,26 +86,31 @@ export class BlogsComponent {
 
   deleteBlog(id: number) {
     if (confirm('Are you sure you want to delete this blog?')) {
-      this.blogs = this.blogs.filter(blog => blog.id !== id);
+      this.apiService.delete(`blogs/${id}`).subscribe({
+        next: () => this.loadBlogs(),
+        error: (error) => console.error('Error deleting blog:', error)
+      });
     }
   }
 
   saveBlog() {
     if (this.isEditing) {
-      const index = this.blogs.findIndex(blog => blog.id === this.currentBlog.id);
-      if (index !== -1) {
-        this.blogs[index] = { ...this.currentBlog } as Blog;
-      }
+      this.apiService.put(`blogs/${this.currentBlog.id}`, this.currentBlog).subscribe({
+        next: () => {
+          this.loadBlogs();
+          this.closeModal();
+        },
+        error: (error) => console.error('Error updating blog:', error)
+      });
     } else {
-      const newBlog: Blog = {
-        ...this.currentBlog,
-        id: Date.now(),
-        createdAt: new Date(),
-        views: 0
-      } as Blog;
-      this.blogs.push(newBlog);
+      this.apiService.post('blogs', this.currentBlog).subscribe({
+        next: () => {
+          this.loadBlogs();
+          this.closeModal();
+        },
+        error: (error) => console.error('Error creating blog:', error)
+      });
     }
-    this.closeModal();
   }
 
   closeModal() {

@@ -7,7 +7,7 @@
     </button>
   </div>
 
-  <div class="reviews-table-container">
+  <div class="reviews-table-container" *ngIf="!loading">
     <table class="reviews-table">
       <thead>
         <tr>
@@ -28,7 +28,7 @@
             </div>
           </td>
           <td>{{ review.comment }}</td>
-          <td>{{ review.date }}</td>
+          <td>{{ review.created_at | date:'short' }}</td>
           <td>
             <div class="actions">
               <button class="action-btn" (click)="openEditModal(review)">
@@ -42,6 +42,10 @@
         </tr>
       </tbody>
     </table>
+  </div>
+
+  <div *ngIf="loading" class="loading">
+    <p>Loading reviews...</p>
   </div>
 
   <!-- Modal for Add/Edit -->
@@ -72,10 +76,7 @@
           <label>Comment</label>
           <textarea [(ngModel)]="editingReview.comment" name="comment" required></textarea>
         </div>
-        <div class="form-group">
-          <label>Date</label>
-          <input type="date" [(ngModel)]="editingReview.date" name="date" required>
-        </div>
+
         <div class="modal-actions">
           <button type="button" class="cancel-btn" (click)="closeModal()">Cancel</button>
           <button type="submit" class="save-btn">Save</button>

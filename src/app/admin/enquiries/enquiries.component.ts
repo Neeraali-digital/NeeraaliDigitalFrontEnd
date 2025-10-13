@@ -1,6 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ApiService } from '../../services/api.service';
+
+interface Enquiry {
+  id: number;
+  first_name: string;
+  last_name: string;
+  email: string;
+  project_type: string;
+  message: string;
+  created_at: string;
+  status: string;
+}
 
 @Component({
   selector: 'app-enquiries',
@@ -9,46 +21,75 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './enquiries.component.html',
   styleUrls: ['./enquiries.component.scss']
 })
-export class EnquiriesComponent {
-  enquiries = [
-    { id: 1, firstName: 'John', lastName: 'Doe', email: 'john@example.com', projectType: 'Brand Strategy', message: 'Interested in your services', date: '2024-10-01', status: 'New' },
-    { id: 2, firstName: 'Jane', lastName: 'Smith', email: 'jane@example.com', projectType: 'Digital Products', message: 'Need more information', date: '2024-09-28', status: 'Replied' }
-  ];
-
+export class EnquiriesComponent implements OnInit {
+  enquiries: Enquiry[] = [];
+  loading = false;
   showModal = false;
-  editingEnquiry: any = null;
+  editingEnquiry: Partial<Enquiry> = {};
+
+  constructor(private apiService: ApiService) {}
+
+  ngOnInit() {
+    this.loadEnquiries();
+  }
+
+  loadEnquiries() {
+    this.loading = true;
+    this.apiService.get<Enquiry[]>('enquiries').subscribe({
+      next: (data) => {
+        this.enquiries = data;
+        this.loading = false;
+      },
+      error: (error) => {
+        console.error('Error loading enquiries:', error);
+        this.loading = false;
+      }
+    });
+  }
 
   openAddModal() {
-    this.editingEnquiry = null;
+    this.editingEnquiry = {};
     this.showModal = true;
   }
 
-  openEditModal(enquiry: any) {
+  openEditModal(enquiry: Enquiry) {
     this.editingEnquiry = { ...enquiry };
     this.showModal = true;
   }
 
   closeModal() {
     this.showModal = false;
-    this.editingEnquiry = null;
+    this.editingEnquiry = {};
   }
 
   saveEnquiry() {
-    if (this.editingEnquiry) {
+    if (this.editingEnquiry.id) {
       // Update existing
-      const index = this.enquiries.findIndex(e => e.id === this.editingEnquiry.id);
-      if (index !== -1) {
-        this.enquiries[index] = { ...this.editingEnquiry };
-      }
+      this.apiService.put(`enquiries/${this.editingEnquiry.id}`, this.editingEnquiry).subscribe({
+        next: () => {
+          this.loadEnquiries();
+          this.closeModal();
+        },
+        error: (error) => console.error('Error updating enquiry:', error)
+      });
     } else {
       // Add new
-      const newId = Math.max(...this.enquiries.map(e => e.id)) + 1;
-      this.enquiries.push({ ...this.editingEnquiry, id: newId });
+      this.apiService.post('enquiries', this.editingEnquiry).subscribe({
+        next: () => {
+          this.loadEnquiries();
+          this.closeModal();
+        },
+        error: (error) => console.error('Error creating enquiry:', error)
+      });
     }
-    this.closeModal();
   }
 
   deleteEnquiry(id: number) {
-    this.enquiries = this.enquiries.filter(e => e.id !== id);
+    if (confirm('Are you sure you want to delete this enquiry?')) {
+      this.apiService.delete(`enquiries/${id}`).subscribe({
+        next: () => this.loadEnquiries(),
+        error: (error) => console.error('Error deleting enquiry:', error)
+      });
+    }
   }
 }

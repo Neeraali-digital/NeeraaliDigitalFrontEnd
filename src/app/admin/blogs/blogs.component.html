@@ -25,7 +25,7 @@
   </div>
 
   <!-- Blogs Table -->
-  <div class="table-container">
+  <div class="table-container" *ngIf="!loading">
     <table class="blogs-table">
       <thead>
         <tr>
@@ -38,42 +38,44 @@
         </tr>
       </thead>
       <tbody>
-        @for (blog of filteredBlogs; track blog.id) {
-          <tr>
-            <td>
-              <div class="blog-title">
-                <img [src]="blog.image" alt="Blog" class="blog-thumb">
-                <div>
-                  <h4>{{ blog.title }}</h4>
-                  <p>{{ blog.excerpt }}</p>
-                </div>
+        <tr *ngFor="let blog of filteredBlogs">
+          <td>
+            <div class="blog-title">
+              <img [src]="blog.image" alt="Blog" class="blog-thumb">
+              <div>
+                <h4>{{ blog.title }}</h4>
+                <p>{{ blog.excerpt }}</p>
               </div>
-            </td>
-            <td>{{ blog.author }}</td>
-            <td>
-              <span class="status-badge" [class]="blog.status">
-                {{ blog.status | titlecase }}
-              </span>
-            </td>
-            <td>{{ blog.createdAt | date:'MMM dd, yyyy' }}</td>
-            <td>{{ blog.views | number }}</td>
-            <td>
-              <div class="actions">
-                <button class="action-btn edit" (click)="editBlog(blog)">
-                  <span class="material-icons">edit</span>
-                </button>
-                <button class="action-btn view" (click)="viewBlog(blog)">
-                  <span class="material-icons">visibility</span>
-                </button>
-                <button class="action-btn delete" (click)="deleteBlog(blog.id)">
-                  <span class="material-icons">delete</span>
-                </button>
-              </div>
-            </td>
-          </tr>
-        }
+            </div>
+          </td>
+          <td>{{ blog.author }}</td>
+          <td>
+            <span class="status-badge" [class]="blog.status">
+              {{ blog.status | titlecase }}
+            </span>
+          </td>
+          <td>{{ blog.created_at | date:'MMM dd, yyyy' }}</td>
+          <td>{{ blog.views | number }}</td>
+          <td>
+            <div class="actions">
+              <button class="action-btn edit" (click)="editBlog(blog)">
+                <span class="material-icons">edit</span>
+              </button>
+              <button class="action-btn view" (click)="viewBlog(blog)">
+                <span class="material-icons">visibility</span>
+              </button>
+              <button class="action-btn delete" (click)="deleteBlog(blog.id)">
+                <span class="material-icons">delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
       </tbody>
     </table>
+  </div>
+
+  <div *ngIf="loading" class="loading">
+    <p>Loading blogs...</p>
   </div>
 
   <!-- Create/Edit Modal -->
