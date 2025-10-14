@@ -12,3 +12,9 @@
 .animate-fade-in-up {
   animation: fade-in-up 0.8s ease-out forwards;
 }
+
+// Three.js Canvas Styles
+canvas {
+  pointer-events: none; // Make canvas non-interactive
+  z-index: 1;
+}
