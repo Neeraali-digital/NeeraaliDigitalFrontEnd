@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
-import * as THREE from 'three';
+import * as THREE from 'three/build/three.module.js';
 
 @Component({
   selector: 'app-hero',
