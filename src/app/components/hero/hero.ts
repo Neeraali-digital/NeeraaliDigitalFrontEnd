@@ -15,14 +15,18 @@ export class Hero implements AfterViewInit, OnDestroy {
   private renderer!: THREE.WebGLRenderer;
   private globe!: THREE.Mesh;
   private connections: THREE.Line[] = [];
-  private atmosphere!: THREE.Mesh;
+  private clouds!: THREE.Mesh;
+  private asteroids: THREE.Mesh[] = [];
   private animationId!: number;
+  private isMobile: boolean = false;
 
   ngAfterViewInit(): void {
+    this.isMobile = window.innerWidth < 768;
     this.initThreeJS();
     this.createGlobe();
-    this.createAtmosphere();
+    this.createClouds();
     this.createConnections();
+    this.createAsteroids();
     this.setupLighting();
     this.animate();
   }
@@ -39,7 +43,7 @@ export class Hero implements AfterViewInit, OnDestroy {
   private initThreeJS(): void {
     // Scene setup
     this.scene = new THREE.Scene();
-    this.scene.background = new THREE.Color(0xffffff); // Pure white background
+    this.scene.background = new THREE.Color(0x000011); // Dark space background
 
     // Camera setup
     this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -59,105 +63,92 @@ export class Hero implements AfterViewInit, OnDestroy {
   }
 
   private createGlobe(): void {
-    // Create globe geometry - larger sphere
-    const geometry = new THREE.SphereGeometry(2, 64, 32);
+    // Create globe geometry - adjust size for mobile
+    const radius = this.isMobile ? 1 : 2;
+    const geometry = new THREE.SphereGeometry(radius, 64, 32);
 
-    // Load high-quality Earth texture
+    // Load high-quality Earth texture with clouds for realism
     const textureLoader = new THREE.TextureLoader();
     const globeTexture = textureLoader.load('https://raw.githubusercontent.com/jeromeetienne/threex.planets/master/images/earthmap1k.jpg'); // High-quality Earth texture
+    const cloudTexture = textureLoader.load('https://raw.githubusercontent.com/jeromeetienne/threex.planets/master/images/earthcloudmap.jpg'); // Cloud texture
 
-    // Create material with texture and transparency
+    // Create material with texture, specular highlights for realistic reflection
     const material = new THREE.MeshPhongMaterial({
       map: globeTexture,
       transparent: true,
-      opacity: 0.8, // Slightly more opaque for better visibility
-      side: THREE.DoubleSide
+      opacity: 0.9, // More opaque for better visibility
+      side: THREE.DoubleSide,
+      shininess: 100, // Add specular highlights for realistic reflection
+      specular: 0x111111 // Dark specular for subtle reflection
     });
 
     this.globe = new THREE.Mesh(geometry, material);
     this.globe.rotation.z = 0.3; // Slight tilt
     this.scene.add(this.globe);
-
-    // Add major city markers
-    this.addCityMarkers();
   }
 
-  private addCityMarkers(): void {
-    // Major cities coordinates (latitude, longitude)
-    const cities = [
-      { name: 'New York', lat: 40.7128, lng: -74.0060, color: 0xff0000 },
-      { name: 'London', lat: 51.5074, lng: -0.1278, color: 0x00ff00 },
-      { name: 'Tokyo', lat: 35.6762, lng: 139.6503, color: 0x0000ff },
-      { name: 'Sydney', lat: -33.8688, lng: 151.2093, color: 0xffff00 },
-      { name: 'Dubai', lat: 25.2048, lng: 55.2708, color: 0xff00ff },
-      { name: 'Mumbai', lat: 19.0760, lng: 72.8777, color: 0x00ffff },
-      { name: 'São Paulo', lat: -23.5505, lng: -46.6333, color: 0xffa500 },
-      { name: 'Berlin', lat: 52.5200, lng: 13.4050, color: 0x800080 }
-    ];
 
-    cities.forEach(city => {
-      this.createCityMarker(city.lat, city.lng, city.color);
-    });
-  }
 
-  private createCityMarker(lat: number, lng: number, color: number): void {
-    // Convert lat/lng to 3D coordinates
-    const phi = (90 - lat) * (Math.PI / 180);
-    const theta = (lng + 180) * (Math.PI / 180);
 
-    const x = -(2.01 * Math.sin(phi) * Math.cos(theta)); // Slightly above surface
-    const z = 2.01 * Math.sin(phi) * Math.sin(theta);
-    const y = 2.01 * Math.cos(phi);
 
-    // Create marker geometry
-    const markerGeometry = new THREE.SphereGeometry(0.02, 8, 8);
-    const markerMaterial = new THREE.MeshBasicMaterial({
-      color: color,
+
+
+  private createClouds(): void {
+    // Create cloud layer for realism
+    const radius = this.isMobile ? 1.52 : 2.02;
+    const cloudGeometry = new THREE.SphereGeometry(radius, 64, 32);
+    const textureLoader = new THREE.TextureLoader();
+    const cloudTexture = textureLoader.load('https://raw.githubusercontent.com/jeromeetienne/threex.planets/master/images/earthcloudmap.jpg');
+
+    const cloudMaterial = new THREE.MeshPhongMaterial({
+      map: cloudTexture,
       transparent: true,
-      opacity: 0.9
+      opacity: 0.4,
+      side: THREE.DoubleSide
     });
 
-    const marker = new THREE.Mesh(markerGeometry, markerMaterial);
-    marker.position.set(x, y, z);
-    this.scene.add(marker);
-
-    // Add pulsing effect
-    this.animateCityMarker(marker);
-  }
-
-  private animateCityMarker(marker: THREE.Mesh): void {
-    const animate = () => {
-      const time = Date.now() * 0.005;
-      const scale = 1 + Math.sin(time) * 0.3;
-      marker.scale.setScalar(scale);
-
-      const material = marker.material as THREE.MeshBasicMaterial;
-      material.opacity = 0.7 + Math.sin(time) * 0.3;
-
-      requestAnimationFrame(animate);
-    };
-    animate();
-  }
-
-  private createAtmosphere(): void {
-    // Create atmosphere/glow effect - larger to match globe
-    const atmosphereGeometry = new THREE.SphereGeometry(2.2, 64, 32);
-    const atmosphereMaterial = new THREE.MeshBasicMaterial({
-      color: this.getComputedStyle('--brand-300'), // Light brand color
-      transparent: true,
-      opacity: 0.15,
-      side: THREE.BackSide
-    });
-
-    this.atmosphere = new THREE.Mesh(atmosphereGeometry, atmosphereMaterial);
-    this.scene.add(this.atmosphere);
+    this.clouds = new THREE.Mesh(cloudGeometry, cloudMaterial);
+    this.scene.add(this.clouds);
   }
 
   private createConnections(): void {
-    // Create dynamic connection lines representing data flow
-    for (let i = 0; i < 8; i++) {
+    // Create dynamic connection lines representing data flow - fewer on mobile
+    const connectionCount = this.isMobile ? 5 : 8;
+    for (let i = 0; i < connectionCount; i++) {
       this.createConnection();
     }
+  }
+
+  private createAsteroids(): void {
+    // Create falling asteroids - fewer on mobile
+    const asteroidCount = this.isMobile ? 3 : 5;
+    for (let i = 0; i < asteroidCount; i++) {
+      this.createAsteroid();
+    }
+  }
+
+  private createAsteroid(): void {
+    // Create asteroid geometry - smaller on mobile
+    const size = this.isMobile ? 0.05 : 0.08;
+    const geometry = new THREE.SphereGeometry(size, 8, 8);
+    const material = new THREE.MeshBasicMaterial({
+      color: 0x333333, // Dark gray
+      transparent: true,
+      opacity: 0.8
+    });
+
+    const asteroid = new THREE.Mesh(geometry, material);
+
+    // Start position above the globe
+    const startY = this.isMobile ? 4 : 6;
+    asteroid.position.set(
+      (Math.random() - 0.5) * 10, // Random X
+      startY, // Above globe
+      (Math.random() - 0.5) * 10  // Random Z
+    );
+
+    this.asteroids.push(asteroid);
+    this.scene.add(asteroid);
   }
 
   private createConnection(): void {
@@ -196,14 +187,19 @@ export class Hero implements AfterViewInit, OnDestroy {
   }
 
   private setupLighting(): void {
-    // Directional light to simulate sunlight
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-    directionalLight.position.set(5, 3, 5);
-    directionalLight.castShadow = false; // Disable shadows for performance
-    this.scene.add(directionalLight);
+    // Sun light - positioned to create realistic Earth illumination
+    const sunLight = new THREE.DirectionalLight(0xffffff, 1.5);
+    sunLight.position.set(10, 5, 5); // Position sun to the side for realistic lighting
+    sunLight.castShadow = false; // Disable shadows for performance
+    this.scene.add(sunLight);
 
-    // Ambient light for subtle fill
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
+    // Rim light to simulate sunlight reflection on the dark side
+    const rimLight = new THREE.DirectionalLight(0x4488ff, 0.3);
+    rimLight.position.set(-10, -5, -5); // Opposite side for rim lighting effect
+    this.scene.add(rimLight);
+
+    // Ambient light for subtle fill in space
+    const ambientLight = new THREE.AmbientLight(0x111122, 0.1);
     this.scene.add(ambientLight);
   }
 
@@ -211,15 +207,33 @@ export class Hero implements AfterViewInit, OnDestroy {
     this.animationId = requestAnimationFrame(this.animate.bind(this));
 
     // Rotate globe slowly
-    this.globe.rotation.y += 0.005;
+    this.globe.rotation.y += 0.0005;
 
-    // Animate atmosphere
-    this.atmosphere.rotation.y += 0.003;
+    // Rotate clouds slightly faster for realism
+    this.clouds.rotation.y += 0.007;
 
     // Animate connections (subtle pulsing)
     this.connections.forEach((connection, index) => {
       const material = connection.material as THREE.LineBasicMaterial;
       material.opacity = 0.3 + Math.sin(Date.now() * 0.001 + index) * 0.3;
+    });
+
+    // Animate asteroids falling
+    this.asteroids.forEach((asteroid, index) => {
+      asteroid.position.y -= 0.02; // Fall speed
+
+      // Reset position when it falls below the globe
+      if (asteroid.position.y < -3) {
+        asteroid.position.set(
+          (Math.random() - 0.5) * 10,
+          this.isMobile ? 4 : 6,
+          (Math.random() - 0.5) * 10
+        );
+      }
+
+      // Add slight rotation for realism
+      asteroid.rotation.x += 0.01;
+      asteroid.rotation.y += 0.01;
     });
 
     this.renderer.render(this.scene, this.camera);

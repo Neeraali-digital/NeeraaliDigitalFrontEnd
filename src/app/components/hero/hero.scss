@@ -18,3 +18,10 @@ canvas {
   pointer-events: none; // Make canvas non-interactive
   z-index: 1;
 }
+
+// Mobile responsiveness for globe container
+@media (max-width: 767px) {
+  .globe-container {
+    height: 200px !important; // Smaller height on mobile
+  }
+}
