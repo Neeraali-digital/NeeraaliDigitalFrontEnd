@@ -21,7 +21,7 @@
       </div>
 
       <!-- Services Grid -->
-      <div class="grid lg:grid-cols-3 gap-12 mb-20" *ngIf="!isLoading">
+      <div class="grid lg:grid-cols-3 gap-12 mb-20">
         <!-- Service 1 -->
         <div class="bg-white rounded-3xl p-8 border border-gray-200 hover:shadow-xl transition-all duration-300">
           <div class="w-16 h-16 rounded-2xl mb-6 flex items-center justify-center" style="background: linear-gradient(135deg, var(--brand-500), var(--brand-600));">
@@ -150,12 +150,6 @@
           </button>
         </div>
       </div>
-
-      <div *ngIf="isLoading" class="text-center py-16">
-        <p class="text-gray-500">Loading blogs...</p>
-      </div>
-
-
 
       <!-- CTA Section -->
       <div class="text-center mt-20">
