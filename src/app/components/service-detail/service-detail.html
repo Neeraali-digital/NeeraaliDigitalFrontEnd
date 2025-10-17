@@ -1,0 +1,44 @@
+<div class="service-detail-container">
+  <div *ngIf="serviceData; else notFound" class="service-detail-content">
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-content">
+        <div class="hero-badge">{{ serviceData.subtitle }}</div>
+        <h1 class="hero-title">{{ serviceData.title }}</h1>
+        <p class="hero-description">{{ serviceData.description }}</p>
+      </div>
+    </section>
+
+    <!-- Services Grid -->
+    <section class="services-section">
+      <div class="services-grid">
+        <div *ngFor="let service of serviceData.services; let i = index" class="service-item">
+          <div class="service-number">{{ (i + 1).toString().padStart(2, '0') }}</div>
+          <p class="service-text">{{ service }}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+      <div class="cta-content">
+        <h2 class="cta-title">{{ serviceData.cta }}</h2>
+        <button (click)="openWhatsApp()" class="cta-button">
+          <span class="button-text">Start Your Project</span>
+          <div class="button-icon">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </button>
+      </div>
+    </section>
+  </div>
+
+  <ng-template #notFound>
+    <div class="not-found">
+      <h1>404</h1>
+      <p>Service Not Found</p>
+    </div>
+  </ng-template>
+</div>

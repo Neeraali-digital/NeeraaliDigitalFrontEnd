@@ -1,16 +1,19 @@
 import { Routes } from '@angular/router';
-import { ServicesComponent } from './components/services/services.component';
+import { WhatWeDo } from './components/what-we-do/what-we-do';
 import { HomeComponent } from './components/home/home.component';
 import { CareersComponent } from './components/careers/careers.component';
 import { AboutComponent } from './components/about/about.component';
 import { WorkComponent } from './components/work/work.component';
+import { Contact } from './components/contact/contact';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'services', component: ServicesComponent },
+  { path: 'what-we-do', component: WhatWeDo },
+  { path: 'what-we-do/:service', loadComponent: () => import('./components/service-detail/service-detail').then(m => m.ServiceDetail) },
   { path: 'careers', component: CareersComponent },
   { path: 'about', component: AboutComponent },
   { path: 'work', component: WorkComponent },
+  { path: 'contact', component: Contact },
   { 
     path: 'admin', 
     loadComponent: () => import('./admin/admin.component').then(m => m.AdminComponent),

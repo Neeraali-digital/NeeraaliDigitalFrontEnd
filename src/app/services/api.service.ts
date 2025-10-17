@@ -35,4 +35,21 @@ export class ApiService {
   delete<T>(endpoint: string): Observable<T> {
     return this.http.delete<T>(`${this.baseUrl}${endpoint}`, { headers: this.getHeaders() });
   }
+
+  // Specific methods for different endpoints
+  getBlogs(): Observable<any[]> {
+    return this.get<any[]>('blogs');
+  }
+
+  getEnquiries(): Observable<any[]> {
+    return this.get<any[]>('enquiries');
+  }
+
+  getReviews(): Observable<any[]> {
+    return this.get<any[]>('reviews');
+  }
+
+  getUsers(): Observable<any[]> {
+    return this.get<any[]>('users');
+  }
 }

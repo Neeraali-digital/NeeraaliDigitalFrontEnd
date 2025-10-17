@@ -1,92 +1,172 @@
-<section id="what-we-do" class="relative py-32 bg-black text-white overflow-hidden">
-  <!-- Background Pattern -->
-  <div class="absolute inset-0 opacity-10">
-    <div class="absolute inset-0" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 40px 40px;"></div>
+<section class="relative bg-white min-h-screen pt-24 pb-16">
+  <!-- Background Elements -->
+  <div class="absolute inset-0">
+    <div class="absolute top-1/4 right-1/4 w-96 h-96 rounded-full opacity-10 blur-3xl" style="background: linear-gradient(135deg, var(--brand-200), var(--brand-300));"></div>
   </div>
 
   <div class="container mx-auto px-6 lg:px-12 relative z-10">
     <div class="max-w-7xl mx-auto">
-      <!-- Section Header -->
+      <!-- Header -->
       <div class="text-center mb-20">
-        <div class="inline-block px-6 py-2 rounded-full bg-white/10 backdrop-blur-sm text-white/80 text-sm font-medium mb-6">
-          Our Expertise
+        <div class="inline-block px-6 py-2 rounded-full bg-gray-100 text-gray-600 text-sm font-medium mb-6">
+          What We Offer
         </div>
-        <h2 class="text-6xl lg:text-7xl font-black mb-8">
-          <span class="text-white">What</span>
-          <span class="bg-gradient-to-r bg-clip-text text-transparent" style="background-image: linear-gradient(135deg, var(--brand-400), var(--brand-600));">We Do</span>
-        </h2>
-        <p class="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-          At Neeraali, we specialize in crafting digital experiences that elevate your brand's presence across multiple platforms.
+        <h1 class="text-6xl lg:text-7xl font-black mb-8">
+          <span class="text-gray-900">Our</span>
+          <span class="bg-gradient-to-r bg-clip-text text-transparent block" style="background-image: linear-gradient(135deg, var(--brand-500), var(--brand-700));">Services</span>
+        </h1>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          Comprehensive digital solutions designed to elevate your brand and drive measurable growth across all platforms.
         </p>
       </div>
 
       <!-- Services Grid -->
-      <div class="grid lg:grid-cols-3 gap-8 mb-20">
+      <div class="grid lg:grid-cols-3 gap-12 mb-20" *ngIf="!isLoading">
         <!-- Service 1 -->
-        <div class="group bg-white/5 backdrop-blur-sm rounded-3xl p-8 border border-white/10 hover:bg-white/10 transition-all duration-500">
+        <div class="bg-white rounded-3xl p-8 border border-gray-200 hover:shadow-xl transition-all duration-300">
           <div class="w-16 h-16 rounded-2xl mb-6 flex items-center justify-center" style="background: linear-gradient(135deg, var(--brand-500), var(--brand-600));">
             <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z"></path>
             </svg>
           </div>
-          <h3 class="text-2xl font-bold mb-4 text-white">Brand Identity</h3>
-          <p class="text-gray-300 mb-6 leading-relaxed">
-            Complete brand identity systems that resonate with your audience and stand out in the market.
+          <h3 class="text-3xl font-bold mb-4 text-gray-900">Brand Identity</h3>
+          <p class="text-gray-600 mb-6 leading-relaxed">
+            Your brand is more than a logo. We craft complete identity systems that build recognition, trust, and lasting impact.
           </p>
-          <div class="space-y-2 text-sm text-gray-400">
-            <div>• Brand Identity</div>
-            <div>• Digital Marketing</div>
-            <div>• Web Solutions</div>
-          </div>
+          <button class="text-sm font-semibold px-6 py-3 rounded-full border-2 hover:bg-gray-900 hover:text-white transition-colors" style="border-color: var(--brand-500); color: var(--brand-600);" routerLink="/what-we-do/brand-identity">
+            Learn More
+          </button>
         </div>
 
         <!-- Service 2 -->
-        <div class="group bg-white/5 backdrop-blur-sm rounded-3xl p-8 border border-white/10 hover:bg-white/10 transition-all duration-500">
-          <div class="w-16 h-16 rounded-2xl mb-6 flex items-center justify-center" style="background: linear-gradient(135deg, var(--brand-500), var(--brand-600));">
-            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-            </svg>
-          </div>
-          <h3 class="text-2xl font-bold mb-4 text-white">Social Media Marketing</h3>
-          <p class="text-gray-300 mb-6 leading-relaxed">
-            Strategic social media campaigns that build communities and drive engagement.
-          </p>
-          <div class="space-y-2 text-sm text-gray-400">
-            <div>• Social Media Marketing</div>
-            <div>• Creative Design Services</div>
-            <div>• Performance Marketing</div>
-          </div>
-        </div>
-
-        <!-- Service 3 -->
-        <div class="group bg-white/5 backdrop-blur-sm rounded-3xl p-8 border border-white/10 hover:bg-white/10 transition-all duration-500">
+        <div class="bg-white rounded-3xl p-8 border border-gray-200 hover:shadow-xl transition-all duration-300">
           <div class="w-16 h-16 rounded-2xl mb-6 flex items-center justify-center" style="background: linear-gradient(135deg, var(--brand-500), var(--brand-600));">
             <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
             </svg>
           </div>
-          <h3 class="text-2xl font-bold mb-4 text-white">Video Production</h3>
-          <p class="text-gray-300 mb-6 leading-relaxed">
-            Compelling video content and influencer partnerships that amplify your brand message.
+          <h3 class="text-3xl font-bold mb-4 text-gray-900">Digital Marketing</h3>
+          <p class="text-gray-600 mb-6 leading-relaxed">
+            From SEO to PPC, we blend data and creativity to get your brand discovered locally and globally.
           </p>
-          <div class="space-y-2 text-sm text-gray-400">
-            <div>• Video Production</div>
-            <div>• Influencer Activation</div>
-            <div>• Content Strategy</div>
+          <button class="text-sm font-semibold px-6 py-3 rounded-full border-2 hover:bg-gray-900 hover:text-white transition-colors" style="border-color: var(--brand-500); color: var(--brand-600);" routerLink="/what-we-do/digital-marketing">
+            Learn More
+          </button>
+        </div>
+
+        <!-- Service 3 -->
+        <div class="bg-white rounded-3xl p-8 border border-gray-200 hover:shadow-xl transition-all duration-300">
+          <div class="w-16 h-16 rounded-2xl mb-6 flex items-center justify-center" style="background: linear-gradient(135deg, var(--brand-500), var(--brand-600));">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+            </svg>
           </div>
+          <h3 class="text-3xl font-bold mb-4 text-gray-900">Web Solutions</h3>
+          <p class="text-gray-600 mb-6 leading-relaxed">
+            We design fast, secure, and conversion-focused websites built and maintained so you can focus on growth.
+          </p>
+          <button class="text-sm font-semibold px-6 py-3 rounded-full border-2 hover:bg-gray-900 hover:text-white transition-colors" style="border-color: var(--brand-500); color: var(--brand-600);" routerLink="/what-we-do/web-solutions">
+            Learn More
+          </button>
+        </div>
+
+        <!-- Service 4 -->
+        <div class="bg-white rounded-3xl p-8 border border-gray-200 hover:shadow-xl transition-all duration-300">
+          <div class="w-16 h-16 rounded-2xl mb-6 flex items-center justify-center" style="background: linear-gradient(135deg, var(--brand-500), var(--brand-600));">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"></path>
+            </svg>
+          </div>
+          <h3 class="text-3xl font-bold mb-4 text-gray-900">Social Media Marketing</h3>
+          <p class="text-gray-600 mb-6 leading-relaxed">
+            More than just posts, we create strategies and content that spark conversations, build communities, and drive engagement.
+          </p>
+          <button class="text-sm font-semibold px-6 py-3 rounded-full border-2 hover:bg-gray-900 hover:text-white transition-colors" style="border-color: var(--brand-500); color: var(--brand-600);" routerLink="/what-we-do/social-media-marketing">
+            Learn More
+          </button>
+        </div>
+
+        <!-- Service 5 -->
+        <div class="bg-white rounded-3xl p-8 border border-gray-200 hover:shadow-xl transition-all duration-300">
+          <div class="w-16 h-16 rounded-2xl mb-6 flex items-center justify-center" style="background: linear-gradient(135deg, var(--brand-500), var(--brand-600));">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+            </svg>
+          </div>
+          <h3 class="text-3xl font-bold mb-4 text-gray-900">Influencer Marketing</h3>
+          <p class="text-gray-600 mb-6 leading-relaxed">
+            We connect you with authentic voices that amplify your reach and strengthen trust with new audiences.
+          </p>
+          <button class="text-sm font-semibold px-6 py-3 rounded-full border-2 hover:bg-gray-900 hover:text-white transition-colors" style="border-color: var(--brand-500); color: var(--brand-600);" routerLink="/what-we-do/influencer-marketing">
+            Learn More
+          </button>
+        </div>
+
+        <!-- Service 6 -->
+        <div class="bg-white rounded-3xl p-8 border border-gray-200 hover:shadow-xl transition-all duration-300">
+          <div class="w-16 h-16 rounded-2xl mb-6 flex items-center justify-center" style="background: linear-gradient(135deg, var(--brand-500), var(--brand-600));">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+            </svg>
+          </div>
+          <h3 class="text-3xl font-bold mb-4 text-gray-900">Creative Design</h3>
+          <p class="text-gray-600 mb-6 leading-relaxed">
+            Designs with purpose—social creatives, brochures, and visuals that not only look good but also deliver results.
+          </p>
+          <button class="text-sm font-semibold px-6 py-3 rounded-full border-2 hover:bg-gray-900 hover:text-white transition-colors" style="border-color: var(--brand-500); color: var(--brand-600);" routerLink="/what-we-do/creative-design">
+            Learn More
+          </button>
+        </div>
+
+        <!-- Service 7 -->
+        <div class="bg-white rounded-3xl p-8 border border-gray-200 hover:shadow-xl transition-all duration-300">
+          <div class="w-16 h-16 rounded-2xl mb-6 flex items-center justify-center" style="background: linear-gradient(135deg, var(--brand-500), var(--brand-600));">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+            </svg>
+          </div>
+          <h3 class="text-3xl font-bold mb-4 text-gray-900">Performance Marketing</h3>
+          <p class="text-gray-600 mb-6 leading-relaxed">
+            Every campaign is data-driven, tested, and optimized to deliver measurable growth and ROI.
+          </p>
+          <button class="text-sm font-semibold px-6 py-3 rounded-full border-2 hover:bg-gray-900 hover:text-white transition-colors" style="border-color: var(--brand-500); color: var(--brand-600);" routerLink="/what-we-do/performance-marketing">
+            Learn More
+          </button>
+        </div>
+
+        <!-- Service 8 -->
+        <div class="bg-white rounded-3xl p-8 border border-gray-200 hover:shadow-xl transition-all duration-300">
+          <div class="w-16 h-16 rounded-2xl mb-6 flex items-center justify-center" style="background: linear-gradient(135deg, var(--brand-500), var(--brand-600));">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+            </svg>
+          </div>
+          <h3 class="text-3xl font-bold mb-4 text-gray-900">Video Production</h3>
+          <p class="text-gray-600 mb-6 leading-relaxed">
+            Engaging video content that tells your story and captivates your audience.
+          </p>
+          <button class="text-sm font-semibold px-6 py-3 rounded-full border-2 hover:bg-gray-900 hover:text-white transition-colors" style="border-color: var(--brand-500); color: var(--brand-600);" routerLink="/what-we-do/video-production">
+            Learn More
+          </button>
         </div>
       </div>
 
+      <div *ngIf="isLoading" class="text-center py-16">
+        <p class="text-gray-500">Loading blogs...</p>
+      </div>
+
+
+
       <!-- CTA Section -->
-      <div class="text-center">
-        <div class="inline-flex items-center space-x-4">
-          <button class="px-8 py-4 rounded-full text-black font-semibold" style="background: linear-gradient(135deg, var(--brand-400), var(--brand-500));">
-            Start Your Project
-          </button>
-          <button class="px-8 py-4 rounded-full text-white border border-white/20 hover:bg-white/10 transition-all duration-300">
-            View Portfolio
-          </button>
-        </div>
+      <div class="text-center mt-20">
+        <h3 class="text-3xl font-bold mb-6 text-gray-900">Ready to Get Started?</h3>
+        <p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+          Let's discuss your project and create a custom solution that drives real results for your business.
+        </p>
+        <button class="group px-8 py-4 rounded-full text-white font-semibold text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300" style="background: linear-gradient(135deg, var(--brand-500), var(--brand-600));">
+          Start Your Project
+          <span class="inline-block ml-2 group-hover:translate-x-1 transition-transform">→</span>
+        </button>
       </div>
     </div>
   </div>

@@ -9,29 +9,14 @@ import { CommonModule } from '@angular/common';
   styleUrl: './whatsapp-popup.component.scss'
 })
 export class WhatsappPopupComponent implements OnInit, OnDestroy {
-  showPopup = false;
-  private reopenTimeout: any;
+  showPopup = true; // Always visible
 
   ngOnInit() {
-    // Show popup immediately when component loads
-    setTimeout(() => {
-      this.showPopup = true;
-    }, 1000);
+    // Component is always visible
   }
 
   ngOnDestroy() {
-    if (this.reopenTimeout) {
-      clearTimeout(this.reopenTimeout);
-    }
-  }
-
-  closePopup() {
-    this.showPopup = false;
-    
-    // Reopen popup after 30 seconds
-    this.reopenTimeout = setTimeout(() => {
-      this.showPopup = true;
-    }, 30000);
+    // No cleanup needed
   }
 
   openWhatsApp() {
@@ -39,11 +24,5 @@ export class WhatsappPopupComponent implements OnInit, OnDestroy {
     const message = 'Hi! I would like to discuss my brand growth with Neeraali Digital.';
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
-    this.showPopup = false;
-    
-    // Clear any pending reopen timeout when user clicks WhatsApp
-    if (this.reopenTimeout) {
-      clearTimeout(this.reopenTimeout);
-    }
   }
 }
