@@ -124,6 +124,7 @@ export class ServiceDetail implements OnInit {
     this.route.params.subscribe(params => {
       const service = params['service'];
       this.serviceData = this.servicesData[service] || null;
+      window.scrollTo(0, 0);
     });
   }
 
