@@ -22,18 +22,14 @@ interface CardPosition {
 })
 export class TrustedBy implements OnInit, OnDestroy {
   logos = [
-    '../../../assets/logos/1.png',
-    '../../../assets/logos/2.png',
-    '../../../assets/logos/3.jpg',
-    '../../../assets/logos/4.jpg',
-    '../../../assets/logos/5.png',
-    '../../../assets/logos/6.png',
-    '../../../assets/logos/7.png',
-    '../../../assets/logos/8.png',
-    '../../../assets/logos/9.png',
-    '../../../assets/logos/10.png',
-    '../../../assets/logos/11.jpg',
-    '../../../assets/logos/12.jpg'
+    "../../../assets/logos/l1.jpeg",
+    "../../../assets/logos/l2.jpeg",
+    "../../../assets/logos/l3.jpeg",
+    "../../../assets/logos/l4.jpeg",
+    "../../../assets/logos/l5.jpeg",
+    "../../../assets/logos/l6.jpeg",
+    "../../../assets/logos/l7.jpeg",
+    
   ];
 
   // Arc pattern - only top and sides, NO bottom cards

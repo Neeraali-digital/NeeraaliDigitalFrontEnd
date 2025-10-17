@@ -1,3 +1,44 @@
+// Moving rows styles
+.moving-rows {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+.row {
+  display: flex;
+  gap: 2rem;
+  animation: moveLeft 20s linear infinite;
+}
+
+.logo-item {
+  flex-shrink: 0;
+  width: 120px;
+  height: 120px;
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.logo-item:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes moveLeft {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
 // Photo card base styles
 .photo-card {
   opacity: 0;
