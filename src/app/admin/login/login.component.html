@@ -1,0 +1,51 @@
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <div class="logo-container">
+        <div class="logo-icon">
+          <span class="material-icons">business</span>
+        </div>
+        <div class="logo-text">
+          <img src="../../../assets/logo1.png" alt="" class="h-10">
+        </div>
+      </div>
+      <h2>Admin Login</h2>
+      <p>Access your admin dashboard</p>
+    </div>
+
+    <form class="login-form" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input
+          type="text"
+          id="username"
+          [(ngModel)]="credentials.username"
+          name="username"
+          required
+          placeholder="Enter your username"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          [(ngModel)]="credentials.password"
+          name="password"
+          required
+          placeholder="Enter your password"
+        >
+      </div>
+
+      <button type="submit" class="login-btn" [disabled]="loading">
+        <span *ngIf="loading" class="material-icons spinning">refresh</span>
+        <span *ngIf="!loading">Login</span>
+      </button>
+
+      <div *ngIf="error" class="error-message">
+        {{ error }}
+      </div>
+    </form>
+  </div>
+</div>

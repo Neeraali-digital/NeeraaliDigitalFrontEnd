@@ -5,6 +5,7 @@ import { CareersComponent } from './components/careers/careers.component';
 import { AboutComponent } from './components/about/about.component';
 import { WorkComponent } from './components/work/work.component';
 import { Contact } from './components/contact/contact';
+import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -14,9 +15,14 @@ export const routes: Routes = [
   { path: 'about', component: AboutComponent },
   { path: 'work', component: WorkComponent },
   { path: 'contact', component: Contact },
-  { 
-    path: 'admin', 
+  {
+    path: 'admin/login',
+    loadComponent: () => import('./admin/login/login.component').then(m => m.LoginComponent)
+  },
+  {
+    path: 'admin',
     loadComponent: () => import('./admin/admin.component').then(m => m.AdminComponent),
+    canActivate: [AuthGuard],
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', loadComponent: () => import('./admin/dashboard/dashboard.component').then(m => m.DashboardComponent) },
