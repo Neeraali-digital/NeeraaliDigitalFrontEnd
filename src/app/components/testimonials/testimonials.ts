@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../services/api.service';
+import { environment } from '../../../environments/environment';
 
 interface Review {
   id: number;
@@ -49,6 +50,6 @@ export class Testimonials implements OnInit {
   getImageUrl(imagePath: string): string {
     if (!imagePath) return '';
     if (imagePath.startsWith('http')) return imagePath;
-    return `http://localhost:8000${imagePath}`;
+    return `${environment.baseUrl}${imagePath}`;
   }
 }

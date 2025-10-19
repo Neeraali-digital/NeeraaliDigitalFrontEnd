@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../../services/api.service';
+import { environment } from '../../../environments/environment';
 
 interface Blog {
   id: number;
@@ -193,6 +194,6 @@ export class BlogsComponent implements OnInit {
   getImageUrl(imagePath: string): string {
     if (!imagePath) return '';
     if (imagePath.startsWith('http')) return imagePath;
-    return `http://localhost:8000${imagePath}`;
+    return `${environment.baseUrl}${imagePath}`;
   }
 }
