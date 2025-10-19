@@ -1,97 +1,97 @@
-// Moving rows styles
-.moving-rows {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-  margin-bottom: 2rem;
-}
-
-.row {
-  display: flex;
-  gap: 2rem;
-  animation: moveLeft 20s linear infinite;
-}
-
-.logo-item {
-  flex-shrink: 0;
-  width: 120px;
-  height: 120px;
-  background: white;
-  border-radius: 1rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.logo-item:hover {
-  transform: translateY(-4px) scale(1.05);
-  box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1);
-}
-
-@keyframes moveLeft {
-  0% {
-    transform: translateX(100%);
-  }
-  100% {
-    transform: translateX(-100%);
-  }
-}
-
-// Photo card base styles
-.photo-card {
+// Modern logo grid animations
+.logo-fade-in {
   opacity: 0;
-  animation: cardFadeIn 0.6s ease-out forwards;
+  animation: logoFadeIn 0.8s ease-out forwards;
 }
 
-// Fade in animation for cards
-@keyframes cardFadeIn {
+@keyframes logoFadeIn {
   0% {
     opacity: 0;
-    transform: scale(0.8) rotate(0deg) translateY(30px);
+    transform: translateY(20px) scale(0.9);
   }
   100% {
     opacity: 1;
-    transform: scale(1) var(--card-rotation) translateY(0);
+    transform: translateY(0) scale(1);
   }
 }
 
-// Initial cards appear immediately
-.photo-card:not(.card-animated) {
-  animation-delay: 0s;
+// Staggered animation for logo grid
+.grid > div:nth-child(1) .logo-fade-in { animation-delay: 0.1s; }
+.grid > div:nth-child(2) .logo-fade-in { animation-delay: 0.2s; }
+.grid > div:nth-child(3) .logo-fade-in { animation-delay: 0.3s; }
+.grid > div:nth-child(4) .logo-fade-in { animation-delay: 0.4s; }
+.grid > div:nth-child(5) .logo-fade-in { animation-delay: 0.5s; }
+.grid > div:nth-child(6) .logo-fade-in { animation-delay: 0.6s; }
+.grid > div:nth-child(7) .logo-fade-in { animation-delay: 0.7s; }
+
+// Hover effects for logo cards
+.group:hover img {
+  filter: grayscale(0) !important;
+  transform: scale(1.1) !important;
 }
 
-// Delayed cards have entrance animation
-.card-animated {
-  animation: cardSlideIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+// Grayscale filter
+.filter.grayscale {
+  filter: grayscale(100%);
 }
 
-@keyframes cardSlideIn {
+.group-hover\:grayscale-0:hover {
+  filter: grayscale(0) !important;
+}
+
+// Stats cards animation
+.stats-card {
+  opacity: 0;
+  animation: statsSlideUp 0.8s ease-out forwards;
+}
+
+@keyframes statsSlideUp {
   0% {
     opacity: 0;
-    transform: scale(0.5) rotate(0deg) translateY(50px);
+    transform: translateY(30px);
   }
   100% {
     opacity: 1;
-    transform: scale(1) var(--card-rotation) translateY(0);
+    transform: translateY(0);
   }
 }
 
-// Photo cards hidden on smaller screens
-@media (max-width: 1279px) {
-  div[class*="hidden xl:block"] {
-    display: none !important;
+// Responsive grid adjustments
+@media (max-width: 768px) {
+  .grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 768px) {
+  .md\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .lg\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1280px) {
+  .xl\:grid-cols-7 {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
   }
 }
 
 // Enhanced shadows
 .shadow-2xl {
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15) !important;
 }
 
 .shadow-xl {
-  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.2) !important;
+  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.1) !important;
+}
+
+.shadow-lg {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
 }
 
 // Smooth transitions
