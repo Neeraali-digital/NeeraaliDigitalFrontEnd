@@ -8,6 +8,7 @@ interface Enquiry {
   first_name: string;
   last_name: string;
   email: string;
+  phone: string;
   project_type: string;
   message: string;
   created_at: string;
@@ -25,7 +26,9 @@ export class EnquiriesComponent implements OnInit {
   enquiries: Enquiry[] = [];
   loading = false;
   showModal = false;
+  showDetailModal = false;
   editingEnquiry: Partial<Enquiry> = {};
+  selectedEnquiry: Enquiry | null = null;
 
   constructor(private apiService: ApiService) {}
 
@@ -91,5 +94,15 @@ export class EnquiriesComponent implements OnInit {
         error: (error) => console.error('Error deleting enquiry:', error)
       });
     }
+  }
+
+  openDetailModal(enquiry: Enquiry) {
+    this.selectedEnquiry = enquiry;
+    this.showDetailModal = true;
+  }
+
+  closeDetailModal() {
+    this.showDetailModal = false;
+    this.selectedEnquiry = null;
   }
 }

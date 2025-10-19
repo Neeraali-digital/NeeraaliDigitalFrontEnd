@@ -6,8 +6,11 @@ import { ApiService } from '../../services/api.service';
 interface Review {
   id: number;
   name: string;
+  position: string;
+  company: string;
   rating: number;
   comment: string;
+  image?: string;
   created_at: string;
 }
 
@@ -23,6 +26,7 @@ export class ReviewsComponent implements OnInit {
   loading = false;
   showModal = false;
   editingReview: Partial<Review> = {};
+  selectedFile: File | null = null;
 
   constructor(private apiService: ApiService) {}
 
@@ -32,7 +36,7 @@ export class ReviewsComponent implements OnInit {
 
   loadReviews() {
     this.loading = true;
-    this.apiService.get('reviews').subscribe({
+    this.apiService.get('reviews/').subscribe({
       next: (data: any) => {
         this.reviews = data as Review[];
         this.loading = false;
@@ -57,12 +61,30 @@ export class ReviewsComponent implements OnInit {
   closeModal() {
     this.showModal = false;
     this.editingReview = {};
+    this.selectedFile = null;
+  }
+
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
   }
 
   saveReview() {
+    const formData = new FormData();
+
+    // Add all review fields to FormData, except image if it's a URL (for editing without changing image)
+    Object.keys(this.editingReview).forEach(key => {
+      if (key !== 'image' || this.selectedFile) {  // Skip image if no new file selected
+        if (this.editingReview[key as keyof Partial<Review>] !== undefined) {
+          formData.append(key, this.editingReview[key as keyof Partial<Review>] as string);
+        }
+      }
+    });
+
+    // Add image file if selected
+
     if (this.editingReview.id) {
       // Update existing
-      this.apiService.put(`reviews/${this.editingReview.id}`, this.editingReview).subscribe({
+      this.apiService.putFormData(`reviews/${this.editingReview.id}/`, formData).subscribe({
         next: () => {
           this.loadReviews();
           this.closeModal();
@@ -71,7 +93,7 @@ export class ReviewsComponent implements OnInit {
       });
     } else {
       // Add new
-      this.apiService.post('reviews', this.editingReview).subscribe({
+      this.apiService.postFormData('reviews/', formData).subscribe({
         next: () => {
           this.loadReviews();
           this.closeModal();
@@ -83,7 +105,7 @@ export class ReviewsComponent implements OnInit {
 
   deleteReview(id: number) {
     if (confirm('Are you sure you want to delete this review?')) {
-      this.apiService.delete(`reviews/${id}`).subscribe({
+      this.apiService.delete(`reviews/${id}/`).subscribe({
         next: () => this.loadReviews(),
         error: (error) => console.error('Error deleting review:', error)
       });

@@ -11,6 +11,8 @@ export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'what-we-do', component: WhatWeDo },
   { path: 'what-we-do/:service', loadComponent: () => import('./components/service-detail/service-detail').then(m => m.ServiceDetail) },
+  { path: 'blogs', loadComponent: () => import('./components/blogs/blogs.component').then(m => m.BlogsComponent) },
+  { path: 'blogs/:id', loadComponent: () => import('./components/blog-detail/blog-detail.component').then(m => m.BlogDetailComponent) },
   { path: 'careers', component: CareersComponent },
   { path: 'about', component: AboutComponent },
   { path: 'work', component: WorkComponent },

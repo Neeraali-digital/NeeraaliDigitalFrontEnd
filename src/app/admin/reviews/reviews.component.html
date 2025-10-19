@@ -11,6 +11,7 @@
     <table class="reviews-table">
       <thead>
         <tr>
+          <th>Image</th>
           <th>Name</th>
           <th>Rating</th>
           <th>Comment</th>
@@ -20,6 +21,10 @@
       </thead>
       <tbody>
         <tr *ngFor="let review of reviews">
+          <td>
+            <img *ngIf="review.image" [src]="review.image" alt="Review Image" class="review-image">
+            <span *ngIf="!review.image" class="no-image">No Image</span>
+          </td>
           <td>{{ review.name }}</td>
           <td>
             <div class="rating">
@@ -63,6 +68,14 @@
           <input type="text" [(ngModel)]="editingReview.name" name="name" required>
         </div>
         <div class="form-group">
+          <label>Position</label>
+          <input type="text" [(ngModel)]="editingReview.position" name="position">
+        </div>
+        <div class="form-group">
+          <label>Company</label>
+          <input type="text" [(ngModel)]="editingReview.company" name="company">
+        </div>
+        <div class="form-group">
           <label>Rating</label>
           <select [(ngModel)]="editingReview.rating" name="rating" required>
             <option value="1">1 Star</option>
@@ -75,6 +88,11 @@
         <div class="form-group">
           <label>Comment</label>
           <textarea [(ngModel)]="editingReview.comment" name="comment" required></textarea>
+        </div>
+        <div class="form-group">
+          <label>Image</label>
+          <input type="file" (change)="onFileSelected($event)" accept="image/*">
+          <small *ngIf="editingReview.image" class="current-image">Current image will be replaced if you select a new one.</small>
         </div>
 
         <div class="modal-actions">

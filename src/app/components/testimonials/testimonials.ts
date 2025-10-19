@@ -7,7 +7,8 @@ interface Review {
   name: string;
   company: string;
   rating: number;
-  review: string;
+  comment: string;
+  image: string;
   created_at: string;
 }
 
@@ -43,5 +44,11 @@ export class Testimonials implements OnInit {
 
   getStars(rating: number): number[] {
     return Array(rating).fill(0);
+  }
+
+  getImageUrl(imagePath: string): string {
+    if (!imagePath) return '';
+    if (imagePath.startsWith('http')) return imagePath;
+    return `http://localhost:8000${imagePath}`;
   }
 }

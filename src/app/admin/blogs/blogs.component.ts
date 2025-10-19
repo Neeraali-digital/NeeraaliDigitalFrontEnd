@@ -30,6 +30,11 @@ export class BlogsComponent implements OnInit {
   showModal = false;
   isEditing = false;
   currentBlog: Partial<Blog> = {};
+  selectedFile: File | null = null;
+
+  currentPage: number = 1;
+  pageSize: number = 6;
+  totalPages: number = 1;
 
   constructor(private apiService: ApiService) {}
 
@@ -39,9 +44,10 @@ export class BlogsComponent implements OnInit {
 
   loadBlogs() {
     this.loading = true;
-    this.apiService.get('blogs').subscribe({
+    this.apiService.getAllBlogs().subscribe({
       next: (data: any) => {
         this.blogs = data as Blog[];
+        this.totalPages = Math.ceil(this.filteredBlogs.length / this.pageSize);
         this.loading = false;
       },
       error: (error) => {
@@ -58,6 +64,23 @@ export class BlogsComponent implements OnInit {
       const matchesStatus = !this.statusFilter || blog.status === this.statusFilter;
       return matchesSearch && matchesStatus;
     });
+  }
+
+  get paginatedBlogs() {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    return this.filteredBlogs.slice(startIndex, startIndex + this.pageSize);
+  }
+
+  prevPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+    }
   }
 
   openCreateModal() {
@@ -86,7 +109,7 @@ export class BlogsComponent implements OnInit {
 
   deleteBlog(id: number) {
     if (confirm('Are you sure you want to delete this blog?')) {
-      this.apiService.delete(`blogs/${id}`).subscribe({
+      this.apiService.delete(`blogs/${id}/`).subscribe({
         next: () => this.loadBlogs(),
         error: (error) => console.error('Error deleting blog:', error)
       });
@@ -94,21 +117,35 @@ export class BlogsComponent implements OnInit {
   }
 
   saveBlog() {
+    const formData = new FormData();
+
+    // Add all blog fields to FormData
+    Object.keys(this.currentBlog).forEach(key => {
+      if (key !== 'image' && this.currentBlog[key as keyof Blog] !== undefined) {
+        formData.append(key, String(this.currentBlog[key as keyof Blog]));
+      }
+    });
+
+    // Add image file if selected
+    if (this.selectedFile) {
+      formData.append('image', this.selectedFile);
+    }
+
     if (this.isEditing) {
-      this.apiService.put(`blogs/${this.currentBlog.id}`, this.currentBlog).subscribe({
+      this.apiService.putFormData(`blogs/${this.currentBlog.id}/`, formData).subscribe({
         next: () => {
           this.loadBlogs();
           this.closeModal();
         },
-        error: (error) => console.error('Error updating blog:', error)
+        error: (error: any) => console.error('Error updating blog:', error)
       });
     } else {
-      this.apiService.post('blogs', this.currentBlog).subscribe({
+      this.apiService.postFormData('blogs/', formData).subscribe({
         next: () => {
           this.loadBlogs();
           this.closeModal();
         },
-        error: (error) => console.error('Error creating blog:', error)
+        error: (error: any) => console.error('Error creating blog:', error)
       });
     }
   }
@@ -116,5 +153,46 @@ export class BlogsComponent implements OnInit {
   closeModal() {
     this.showModal = false;
     this.currentBlog = {};
+    this.selectedFile = null;
+  }
+
+  onDragOver(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  onDragLeave(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  onFileDropped(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    if (event.dataTransfer && event.dataTransfer.files.length > 0) {
+      this.handleFile(event.dataTransfer.files[0]);
+    }
+  }
+
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.handleFile(input.files[0]);
+    }
+  }
+
+  handleFile(file: File) {
+    this.selectedFile = file;
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.currentBlog.image = reader.result as string;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  getImageUrl(imagePath: string): string {
+    if (!imagePath) return '';
+    if (imagePath.startsWith('http')) return imagePath;
+    return `http://localhost:8000${imagePath}`;
   }
 }

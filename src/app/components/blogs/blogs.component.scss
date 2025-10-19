@@ -1,0 +1,18 @@
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.pagination-btn {
+  &.active {
+    background: linear-gradient(135deg, var(--brand-500), var(--brand-600));
+    color: white;
+  }
+  
+  &:not(.active):hover {
+    background: linear-gradient(135deg, var(--brand-400), var(--brand-500));
+    color: white;
+  }
+}

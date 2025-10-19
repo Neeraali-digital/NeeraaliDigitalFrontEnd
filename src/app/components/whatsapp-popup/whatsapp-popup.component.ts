@@ -25,4 +25,9 @@ export class WhatsappPopupComponent implements OnInit, OnDestroy {
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   }
+
+  makeCall() {
+    const phoneNumber = '919945883333';
+    window.open(`tel:${phoneNumber}`, '_self');
+  }
 }
